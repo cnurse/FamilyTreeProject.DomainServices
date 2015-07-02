@@ -22,19 +22,11 @@ namespace FamilyTreeProject.DomainServices.Tests
     {
         private FamilyService service;
 
-        #region Constructor Tests
-
         [Test]
         public void FamilyService_Constructor_Throws_If_UnitOfWork_Argument_Is_Null()
         {
             Assert.Throws<ArgumentNullException>(() => new FamilyService(null));
         }
-
-        #endregion
-
-        #region Tests
-
-        #region AddFamily Tests
 
         [Test]
         public void FamilyService_AddFamily_Throws_On_Null_Family()
@@ -113,10 +105,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             mockUnitOfWork.Verify(db => db.Commit());
         }
 
-        #endregion
-
-        #region DeleteFamily Tests
-
         [Test]
         public void FamilyService_DeleteFamily_Throws_On_Null_Family()
         {
@@ -194,10 +182,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             mockUnitOfWork.Verify(db => db.Commit());
         }
 
-        #endregion
-
-        #region GetFamily Tests
-
         [Test]
         public void FamilyService_GetFamily_Throws_On_Negative_Id()
         {
@@ -266,10 +250,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             Assert.IsNull(family);
         }
 
-        #endregion
-
-        #region GetFamilies Tests
-
         [Test]
         public void FamilyService_GetFamilies_Throws_On_Negative_TreeId()
         {
@@ -299,10 +279,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             //Assert
             mockRepository.Verify(r => r.Find(It.IsAny<Expression<Func<Family, bool>>>()));
         }
-
-        #endregion
-
-        #region UpdateFamily Tests
 
         [Test]
         public void FamilyService_UpdateFamily_Throws_On_Null_Family()
@@ -383,12 +359,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             mockUnitOfWork.Verify(db => db.Commit());
         }
 
-        #endregion
-
-        #endregion
-
-        #region Helper Methods
-
         private static IQueryable<Family> GetFamilies()
         {
             var Families = new List<Family>();
@@ -414,7 +384,5 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             return Families.AsQueryable();
         }
-
-        #endregion
     }
 }

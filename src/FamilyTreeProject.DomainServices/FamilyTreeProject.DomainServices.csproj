@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FamilyTreeProject.Core, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\FamilyTreeProject.Core.0.2.0\lib\FamilyTreeProject.Core.dll</HintPath>
+    <Reference Include="FamilyTreeProject.Core, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FamilyTreeProject.Core.0.3.0\lib\FamilyTreeProject.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Naif.Core, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -59,8 +59,10 @@
     <Compile Include="IIndividualService.cs" />
     <Compile Include="IndividualService.cs" />
     <Compile Include="INoteService.cs" />
+    <Compile Include="ITreeService.cs" />
     <Compile Include="NoteService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TreeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

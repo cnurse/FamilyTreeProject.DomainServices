@@ -22,19 +22,11 @@ namespace FamilyTreeProject.DomainServices.Tests
     {
         private NoteService service;
 
-        #region Constructor Tests
-
         [Test]
         public void NoteService_Constructor_Throws_If_UnitOfWork_Argument_Is_Null()
         {
             Assert.Throws<ArgumentNullException>(() => new NoteService(null));
         }
-
-        #endregion
-
-        #region Tests
-
-        #region AddNote Tests
 
         [Test]
         public void NoteService_AddNote_Throws_On_Null_Note()
@@ -95,10 +87,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             mockUnitOfWork.Verify(db => db.Commit());
         }
 
-        #endregion
-
-        #region DeleteNote Tests
-
         [Test]
         public void NoteService_DeleteNote_Throws_On_Null_Note()
         {
@@ -157,10 +145,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             //Assert
             mockUnitOfWork.Verify(d => d.Commit());
         }
-
-        #endregion
-
-        #region GetNote Tests
 
         [Test]
         public void NoteService_GetNote_Throws_On_Negative_Id()
@@ -228,10 +212,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             Assert.IsNull(note);
         }
 
-        #endregion
-
-        #region GetNotes Tests
-
         [Test]
         public void NoteService_GetNotes_Throws_On_Negative_TreeId()
         {
@@ -259,10 +239,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             //Assert
             mockRepository.Verify(r => r.Find(It.IsAny<Expression<Func<Note, bool>>>()));
         }
-
-        #endregion
-
-        #region UpdateNote Tests
 
         [Test]
         public void NoteService_UpdateNote_Throws_On_Null_Note()
@@ -323,12 +299,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             mockUnitOfWork.Verify(db => db.Commit());
         }
 
-        #endregion
-
-        #endregion
-
-        #region Helper Methods
-
         private static IQueryable<Note> GetNotes()
         {
             var Notes = new List<Note>();
@@ -345,7 +315,5 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             return Notes.AsQueryable();
         }
-
-        #endregion
     }
 }

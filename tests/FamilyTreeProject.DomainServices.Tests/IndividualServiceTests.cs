@@ -23,19 +23,11 @@ namespace FamilyTreeProject.DomainServices.Tests
     {
         private IndividualService service;
 
-        #region Constructor Tests
-
         [Test]
         public void IndividualService_Constructor_Throws_If_UnitOfWork_Argument_Is_Null()
         {
             Assert.Throws<ArgumentNullException>(() => new IndividualService(null));
         }
-
-        #endregion
-
-        #region Tests
-
-        #region AddIndividual Tests
 
         [Test]
         public void IndividualService_AddIndividual_Throws_On_Null_Individual()
@@ -98,10 +90,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             mockUnitOfWork.Verify(db => db.Commit());
         }
 
-        #endregion
-
-        #region DeleteIndividual Tests
-
         [Test]
         public void IndividualService_DeleteIndividual_Throws_On_Null_Individual()
         {
@@ -162,10 +150,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             //Assert
             mockUnitOfWork.Verify(db => db.Commit());
         }
-
-        #endregion
-
-        #region GetChildren Tests
 
         [Test]
         public void IndividualService_GetChildren_Throws_On_Negative_ParentId()
@@ -229,10 +213,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             //Assert
             Assert.IsTrue(children.Count == 0);
         }
-
-        #endregion
-
-        #region GetIndividual Tests
 
         [Test]
         public void IndividualService_GetIndividual_Throws_On_Negative_Id()
@@ -322,10 +302,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             Assert.AreEqual(childrenCount, individual.Children.Count);
         }
 
-        #endregion
-
-        #region GetIndividuals Tests
-
         [Test]
         public void IndividualService_GetIndividuals_Throws_On_Negative_TreeId()
         {
@@ -353,10 +329,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             //Assert
             mockRepository.Verify(r => r.Find(It.IsAny<Expression<Func<Individual, bool>>>()));
         }
-
-        #endregion
-
-        #region GetChildren Tests
 
         [Test]
         public void IndividualService_GetSpouses_Throws_On_Negative_Id()
@@ -442,10 +414,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             Assert.AreEqual(expectedId, spouses[index].Id);
         }
 
-        #endregion
-
-        #region UpdateIndividual Tests
-
         [Test]
         public void IndividualService_UpdateIndividual_Throws_On_Null_Individual()
         {
@@ -499,12 +467,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             mockUnitOfWork.Verify(db => db.Commit());
         }
 
-        #endregion
-
-        #endregion
-
-        #region Helper Methods
-
         private static IQueryable<Family> GetFamilies()
         {
             var families = new List<Family> {
@@ -548,7 +510,5 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             return individuals.AsQueryable();
         }
-
-        #endregion
     }
 }
