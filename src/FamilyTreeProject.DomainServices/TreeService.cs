@@ -16,7 +16,7 @@ namespace FamilyTreeProject.DomainServices
     public class TreeService : ITreeService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILinqRepository<Tree> _repository;
+        private readonly IRepository<Tree> _repository;
 
         public TreeService(IUnitOfWork unitOfWork)
         {
@@ -24,7 +24,7 @@ namespace FamilyTreeProject.DomainServices
             Requires.NotNull(unitOfWork);
 
             _unitOfWork = unitOfWork;
-            _repository = _unitOfWork.GetLinqRepository<Tree>();
+            _repository = _unitOfWork.GetRepository<Tree>();
         }
 
         public void AddTree(Tree tree)

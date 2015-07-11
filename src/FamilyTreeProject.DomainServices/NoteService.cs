@@ -13,10 +13,10 @@ using Naif.Data;
 
 namespace FamilyTreeProject.DomainServices
 {
-    public class NoteService
+    public class NoteService : INoteService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILinqRepository<Note> _repository;
+        private readonly IRepository<Note> _repository;
 
         /// <summary>
         ///   Constructs a Note Service that will use the specified
@@ -31,7 +31,7 @@ namespace FamilyTreeProject.DomainServices
             Requires.NotNull(unitOfWork);
 
             _unitOfWork = unitOfWork;
-            _repository = _unitOfWork.GetLinqRepository<Note>();
+            _repository = _unitOfWork.GetRepository<Note>();
         }
 
         /// <summary>

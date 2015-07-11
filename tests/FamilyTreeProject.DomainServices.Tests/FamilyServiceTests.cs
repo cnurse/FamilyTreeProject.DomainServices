@@ -59,8 +59,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Family>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Family>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new FamilyService(mockUnitOfWork.Object);
@@ -92,8 +92,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Family>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Family>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new FamilyService(mockUnitOfWork.Object);
@@ -136,8 +136,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Family>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Family>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new FamilyService(mockUnitOfWork.Object);
@@ -169,8 +169,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Family>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Family>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new FamilyService(mockUnitOfWork.Object);
@@ -198,8 +198,8 @@ namespace FamilyTreeProject.DomainServices.Tests
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Family>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Family>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
             mockRepository.Setup(r => r.GetAll())
                                 .Returns(GetFamilies());
             service = new FamilyService(mockUnitOfWork.Object);
@@ -217,8 +217,8 @@ namespace FamilyTreeProject.DomainServices.Tests
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Family>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Family>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
             mockRepository.Setup(r => r.GetAll())
                                 .Returns(GetFamilies());
             service = new FamilyService(mockUnitOfWork.Object);
@@ -236,8 +236,8 @@ namespace FamilyTreeProject.DomainServices.Tests
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Family>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Family>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
             mockRepository.Setup(r => r.GetAll())
                                 .Returns(GetFamilies());
             service = new FamilyService(mockUnitOfWork.Object);
@@ -258,7 +258,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             service = new FamilyService(mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<IndexOutOfRangeException>(() => service.GetFamilies(-1));
+            Assert.Throws<IndexOutOfRangeException>(() => service.GetFamilies(-1, false));
         }
 
         [Test]
@@ -266,15 +266,15 @@ namespace FamilyTreeProject.DomainServices.Tests
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Family>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Family>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
             mockRepository.Setup(r => r.Find(It.IsAny<Expression<Func<Family, bool>>>()))
                                 .Returns(GetFamilies());
             service = new FamilyService(mockUnitOfWork.Object);
             const int treeId = TestConstants.TREE_Id;
 
             //Act
-            service.GetFamilies(treeId);
+            service.GetFamilies(treeId, false);
 
             //Assert
             mockRepository.Verify(r => r.Find(It.IsAny<Expression<Func<Family, bool>>>()));
@@ -312,8 +312,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Family>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Family>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new FamilyService(mockUnitOfWork.Object);
@@ -346,8 +346,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Family>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Family>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new FamilyService(mockUnitOfWork.Object);

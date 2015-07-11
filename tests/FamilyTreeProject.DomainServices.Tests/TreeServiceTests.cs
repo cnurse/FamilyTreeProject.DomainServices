@@ -51,8 +51,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Tree>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new TreeService(mockUnitOfWork.Object);
@@ -75,8 +75,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Tree>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new TreeService(mockUnitOfWork.Object);
@@ -110,8 +110,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Tree>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new TreeService(mockUnitOfWork.Object);
@@ -134,8 +134,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Tree>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new TreeService(mockUnitOfWork.Object);
@@ -163,8 +163,8 @@ namespace FamilyTreeProject.DomainServices.Tests
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Tree>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
             service = new TreeService(mockUnitOfWork.Object);
             const int id = TestConstants.ID_Exists;
 
@@ -180,8 +180,8 @@ namespace FamilyTreeProject.DomainServices.Tests
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Tree>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
             mockRepository.Setup(r => r.GetAll())
                                 .Returns(GetTrees());
             service = new TreeService(mockUnitOfWork.Object);
@@ -199,8 +199,8 @@ namespace FamilyTreeProject.DomainServices.Tests
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Tree>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
             mockRepository.Setup(r => r.GetAll())
                                 .Returns(GetTrees());
             service = new TreeService(mockUnitOfWork.Object);
@@ -218,8 +218,8 @@ namespace FamilyTreeProject.DomainServices.Tests
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Tree>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
             service = new TreeService(mockUnitOfWork.Object);
 
             //Act
@@ -251,8 +251,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Tree>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new TreeService(mockUnitOfWork.Object);
@@ -275,8 +275,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Tree>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new TreeService(mockUnitOfWork.Object);

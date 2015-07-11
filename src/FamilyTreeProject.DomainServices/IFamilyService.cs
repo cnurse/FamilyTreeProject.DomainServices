@@ -36,7 +36,7 @@ namespace FamilyTreeProject.DomainServices
         /// <returns>An <see cref = "Family" /></returns>
         Family GetFamily(int id, bool includeChildren);
 
-        IEnumerable<Family> GetFamilies(int treeId);
+        IEnumerable<Family> GetFamilies(int treeId, bool includeChildren);
 
         /// <summary>
         ///   Updates a family in the data store.

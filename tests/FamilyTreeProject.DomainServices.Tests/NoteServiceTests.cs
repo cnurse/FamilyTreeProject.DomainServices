@@ -50,8 +50,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Note>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Note>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new NoteService(mockUnitOfWork.Object);
@@ -74,8 +74,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Note>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Note>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new NoteService(mockUnitOfWork.Object);
@@ -109,8 +109,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Note>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Note>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new NoteService(mockUnitOfWork.Object);
@@ -133,8 +133,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Note>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Note>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new NoteService(mockUnitOfWork.Object);
@@ -162,8 +162,8 @@ namespace FamilyTreeProject.DomainServices.Tests
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Note>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Note>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
             service = new NoteService(mockUnitOfWork.Object);
             const int id = TestConstants.ID_Exists;
 
@@ -179,8 +179,8 @@ namespace FamilyTreeProject.DomainServices.Tests
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Note>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Note>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
             mockRepository.Setup(r => r.GetAll())
                                 .Returns(GetNotes());
             service = new NoteService(mockUnitOfWork.Object);
@@ -198,8 +198,8 @@ namespace FamilyTreeProject.DomainServices.Tests
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Note>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Note>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
             mockRepository.Setup(r => r.GetAll())
                                 .Returns(GetNotes());
             service = new NoteService(mockUnitOfWork.Object);
@@ -228,8 +228,8 @@ namespace FamilyTreeProject.DomainServices.Tests
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Note>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Note>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
             service = new NoteService(mockUnitOfWork.Object);
             const int treeId = TestConstants.TREE_Id;
 
@@ -262,8 +262,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Note>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Note>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new NoteService(mockUnitOfWork.Object);
@@ -286,8 +286,8 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Create Mock
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<ILinqRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetLinqRepository<Note>()).Returns(mockRepository.Object);
+            var mockRepository = new Mock<IRepository<Note>>();
+            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
 
             //Arrange
             service = new NoteService(mockUnitOfWork.Object);

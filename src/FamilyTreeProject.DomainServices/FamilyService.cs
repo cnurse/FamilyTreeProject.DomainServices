@@ -13,10 +13,11 @@ using Naif.Data;
 
 namespace FamilyTreeProject.DomainServices
 {
-    public class FamilyService
+    public class FamilyService : IFamilyService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ILinqRepository<Family> _repository;
+        private readonly IRepository<Family> _familyRepository;
+        private readonly IRepository<Individual> _individualRepository;
 
         /// <summary>
         ///   Constructs a Family Service that will use the specified
@@ -31,7 +32,8 @@ namespace FamilyTreeProject.DomainServices
             Requires.NotNull(unitOfWork);
 
             _unitOfWork = unitOfWork;
-            _repository = _unitOfWork.GetLinqRepository<Family>();
+            _familyRepository = _unitOfWork.GetRepository<Family>();
+            _individualRepository = _unitOfWork.GetRepository<Individual>();
         }
 
         /// <summary>
@@ -44,7 +46,7 @@ namespace FamilyTreeProject.DomainServices
             //Contract
             Requires.NotNull(family);
 
-            _repository.Add(family);
+            _familyRepository.Add(family);
             _unitOfWork.Commit();
         }
 
@@ -60,7 +62,7 @@ namespace FamilyTreeProject.DomainServices
             //Contract
             Requires.NotNull(family);
 
-            _repository.Delete(family);
+            _familyRepository.Delete(family);
             _unitOfWork.Commit();
         }
 
@@ -75,17 +77,17 @@ namespace FamilyTreeProject.DomainServices
             //Contract
             Requires.NotNegative("id", id);
 
-            var family = _repository.GetAll().SingleOrDefault(f => f.Id == id);
+            var family = _familyRepository.GetAll().SingleOrDefault(f => f.Id == id);
 
             return family;
         }
 
-        public IEnumerable<Family> GetFamilies(int treeId)
+        public IEnumerable<Family> GetFamilies(int treeId, bool includeChildren)
         {
             //Contract
             Requires.NotNegative("treeId", treeId);
 
-            return _repository.Find(ind => ind.TreeId == treeId);
+            return _familyRepository.Find(ind => ind.TreeId == treeId);
         }
 
         /// <summary>
@@ -97,7 +99,7 @@ namespace FamilyTreeProject.DomainServices
             //Contract
             Requires.NotNull(family);
 
-            _repository.Update(family);
+            _familyRepository.Update(family);
             _unitOfWork.Commit();
         }
     }
