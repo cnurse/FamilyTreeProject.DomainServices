@@ -6,9 +6,11 @@
 //                                         *
 // *****************************************
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Permissions;
+using Naif.Core.Caching;
 using Naif.Core.Contracts;
 using Naif.Data;
 
@@ -20,6 +22,9 @@ namespace FamilyTreeProject.DomainServices
     /// </summary>
     public class IndividualService : IIndividualService
     {
+        private const string FormattedCacheKey = "FTP_LinkedIndividuals_{0}";
+
+        private readonly ICacheProvider _cache;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Individual> _individualRepository;
         private readonly IRepository<Family> _familyRepository;
@@ -28,12 +33,14 @@ namespace FamilyTreeProject.DomainServices
         /// Constructs an Individuals Service to manage Individuals
         /// </summary>
         /// <param name = "unitOfWork">The Unit Of Work to use to retrieve data</param>
-        public IndividualService(IUnitOfWork unitOfWork)
+        /// <param name = "cache">The Cache Provider to use</param>
+        public IndividualService(IUnitOfWork unitOfWork, ICacheProvider cache)
         {
-            //Contract
             Requires.NotNull(unitOfWork);
+            Requires.NotNull(cache);
 
             _unitOfWork = unitOfWork;
+            _cache = cache;
             _individualRepository = _unitOfWork.GetRepository<Individual>();
             _familyRepository = _unitOfWork.GetRepository<Family>();
         }
@@ -68,136 +75,124 @@ namespace FamilyTreeProject.DomainServices
             _unitOfWork.Commit();
         }
 
-        /// <summary>
-        ///   Retrieves all the children of an Individual
-        /// </summary>
-        /// <param name = "parentId">The Id of the Parent</param>
-        /// <param name = "settings">A <see cref = "IndividualServiceSettings" /> object that contains settings 
-        /// to control the individual returned</param>
-        /// <returns>An <see cref = "IList{T}" />.</returns>
-        public IList<Individual> GetChildren(int parentId, IndividualServiceSettings settings)
-        {
-            Requires.NotNegative("parentId", parentId);
+        ///// <summary>
+        /////   Retrieves all the children of an Individual
+        ///// </summary>
+        ///// <param name = "parentId">The Id of the Parent</param>
+        ///// <param name = "settings">A <see cref = "IndividualServiceSettings" /> object that contains settings 
+        ///// to control the individual returned</param>
+        ///// <returns>An <see cref = "IList{T}" />.</returns>
+        //public IList<Individual> GetChildren(int parentId, IndividualServiceSettings settings)
+        //{
+        //    Requires.NotNegative("parentId", parentId);
 
-            return _individualRepository.Get(settings.TreeId).Where(ind => ind.FatherId == parentId || ind.MotherId == parentId).ToList();
-        }
+        //    return _individualRepository.Get(settings.TreeId).Where(ind => ind.FatherId == parentId || ind.MotherId == parentId).ToList();
+        //}
 
         /// <summary>
         /// Retrieves a single Individual
         /// </summary>
         /// <param name = "id">The Id of the Indiidual to retrieve</param>
-        /// <param name = "settings">A <see cref = "IndividualServiceSettings" /> object that contains settings 
-        /// to control the individual returned</param>
+        /// <param name="treeId">The Id of the tree</param>
         /// <returns>An <see cref = "Individual" /></returns>
-        public Individual GetIndividual(int id, IndividualServiceSettings settings)
+        public Individual GetIndividual(int id, int treeId)
         {
             //Contract
             Requires.NotNegative("id", id);
+            Requires.NotNegative("treeId", treeId);
 
-            var individual = _individualRepository.Get(settings.TreeId).SingleOrDefault(i => i.Id == id);
-
-            LinkRelatives(individual, settings);
-
-            return individual;
+            return GetIndividuals(treeId).SingleOrDefault(i => i.Id == id);
         }
 
         /// <summary>
-        ///   Retrieves a collection of individuals
+        /// Retrieves all the individuals for a particular tree
         /// </summary>
-        /// <param name = "settings">A <see cref = "IndividualServiceSettings" /> object that contains settings 
-        /// to control the individuals returned</param>
+        /// <param name="treeId">The Id of the tree</param>
         /// <returns>A collection of <see cref = "Individual" />objects</returns>
-        public IEnumerable<Individual> GetIndividuals(IndividualServiceSettings settings)
+        public IEnumerable<Individual> GetIndividuals(int treeId)
         {
-            Requires.NotNull(settings);
-            Requires.PropertyNotNegative(settings, "TreeId");
+            Requires.NotNegative("treeId", treeId);
 
-            var individuals = _individualRepository.Get(settings.TreeId).ToList();
-            foreach (var individual in individuals)
-            {
-                LinkRelatives(individual, settings);
-            }
+            var cacheKey = String.Format(FormattedCacheKey, treeId);
+
+            var individuals = _cache.GetCachedObject<IEnumerable<Individual>>(cacheKey, () =>
+                                {
+                                    var list = _individualRepository.Get(treeId).ToList();
+                                    foreach (var individual in list)
+                                    {
+                                        LinkRelatives(individual, list);
+                                    }
+
+                                    return list;
+                                });
 
             return individuals;
         }
 
-        /// <summary>
-        ///   Retrieves all the spouses of an Individual
-        /// </summary>
-        /// <param name = "individualId">The Id of the Individual</param>
-        /// <param name = "settings">A <see cref = "IndividualServiceSettings" /> object that contains settings 
-        /// to control the individuals returned</param>
-        /// <returns>An <see cref = "IList{Individual}" />.</returns>
-        public IList<Individual> GetSpouses(int individualId, IndividualServiceSettings settings)
-        {
-            Requires.NotNegative("individualId", individualId);
+        ///// <summary>
+        /////   Retrieves all the spouses of an Individual
+        ///// </summary>
+        ///// <param name = "individualId">The Id of the Individual</param>
+        ///// <param name = "settings">A <see cref = "IndividualServiceSettings" /> object that contains settings 
+        ///// to control the individuals returned</param>
+        ///// <returns>An <see cref = "IList{Individual}" />.</returns>
+        //public IList<Individual> GetSpouses(int individualId, IndividualServiceSettings settings)
+        //{
+        //    Requires.NotNegative("individualId", individualId);
 
-            var spouses = new List<Individual>();
+        //    var spouses = new List<Individual>();
 
-            LinkSpouses(individualId, spouses, settings);
+        //    LinkSpouses(individualId, spouses, settings);
 
-            return spouses;
-        }
+        //    return spouses;
+        //}
 
-        private void LinkRelatives(Individual individual, IndividualServiceSettings settings)
+        private void LinkRelatives(Individual individual, IList<Individual> list)
         {
             if (individual != null)
             {
-                if (settings.IncludeParents && individual.FatherId > 0)
+                if (individual.FatherId > 0)
                 {
-                    var father = _individualRepository.Get(settings.TreeId).SingleOrDefault(i => i.Id == individual.FatherId);
+                    var father = list.SingleOrDefault(i => i.Id == individual.FatherId);
                     if (father != null)
                     {
                         individual.Father = father;
                     }
                 }
-                if (settings.IncludeParents && individual.MotherId > 0)
+                if (individual.MotherId > 0)
                 {
-                    var mother = _individualRepository.Get(settings.TreeId).SingleOrDefault(i => i.Id == individual.MotherId);
+                    var mother = list.SingleOrDefault(i => i.Id == individual.MotherId);
                     if (mother != null)
                     {
                         individual.Mother = mother;
                     }
                 }
-                individual.Children = settings.IncludeChildren ? GetChildren(individual.Id, settings) : new List<Individual>();
+                individual.Children = list.Where(ind => ind.FatherId == individual.Id || ind.MotherId == individual.Id).ToList();
 
-                LinkSpouses(individual.Id, individual.Spouses, settings);
-            }
-        }
-
-        private void LinkSpouses(int inidivudalId, IList<Individual> spouses, IndividualServiceSettings settings)
-        {
-            if (spouses == null)
-            {
-                spouses = new List<Individual>();
-            }
-
-            var families = _familyRepository.Find(f => f.HusbandId == inidivudalId || f.WifeId == inidivudalId);
-            foreach (Family fam in families)
-            {
-                Individual spouse = null;
-                IndividualServiceSettings spouseSettings = new IndividualServiceSettings(settings)
+                individual.Spouses = new List<Individual>();
+                var families = _familyRepository.Find(f => f.HusbandId == individual.Id || f.WifeId == individual.Id);
+                foreach (Family fam in families)
                 {
-                    IncludeSpouses = false
-                };
+                    Individual spouse = null;
 
-                if (fam.HusbandId == inidivudalId)
-                {
-                    if (fam.WifeId.HasValue && fam.WifeId.Value > 0)
+                    if (fam.HusbandId == individual.Id)
                     {
-                        spouse = GetIndividual(fam.WifeId.Value, spouseSettings);
+                        if (fam.WifeId.HasValue && fam.WifeId.Value > 0)
+                        {
+                            spouse = list.SingleOrDefault(i => i.Id == fam.WifeId.Value);
+                        }
                     }
-                }
-                else
-                {
-                    if (fam.HusbandId.HasValue && fam.HusbandId.Value > 0)
+                    else
                     {
-                        spouse = GetIndividual(fam.HusbandId.Value, spouseSettings);
+                        if (fam.HusbandId.HasValue && fam.HusbandId.Value > 0)
+                        {
+                            spouse = list.SingleOrDefault(i => i.Id == fam.HusbandId.Value);
+                        }
                     }
-                }
-                if (spouse != null)
-                {
-                    spouses.Add(spouse);
+                    if (spouse != null)
+                    {
+                        individual.Spouses.Add(spouse);
+                    }
                 }
             }
         }

@@ -31,40 +31,38 @@ namespace FamilyTreeProject.DomainServices
         /// <param name = "individual">The individual to delete</param>
         void DeleteIndividual(Individual individual);
 
-        /// <summary>
-        ///   Retrieves all the children of an Individual
-        /// </summary>
-        /// <param name = "parentId">The Id of the Parent</param>
-        /// <param name = "settings">A <see cref = "IndividualServiceSettings" /> object that contains settings 
-        /// to control the individual returned</param>
-        /// <returns>An <see cref = "IList{T}" />.</returns>
-        IList<Individual> GetChildren(int parentId, IndividualServiceSettings settings);
+        ///// <summary>
+        /////   Retrieves all the children of an Individual
+        ///// </summary>
+        ///// <param name = "parentId">The Id of the Parent</param>
+        ///// <param name = "settings">A <see cref = "IndividualServiceSettings" /> object that contains settings 
+        ///// to control the individual returned</param>
+        ///// <returns>An <see cref = "IList{T}" />.</returns>
+        //IList<Individual> GetChildren(int parentId, IndividualServiceSettings settings);
 
         /// <summary>
         ///   Retrieves a single Individual
         /// </summary>
         /// <param name = "id">The Id of the Individual to retrieve</param>
-        /// <param name = "settings">A <see cref = "IndividualServiceSettings" /> object that contains settings 
-        /// to control the individuals returned</param>
+        /// <param name="treeId">The Id of the tree</param>
         /// <returns>An <see cref = "Individual" /></returns>
-        Individual GetIndividual(int id, IndividualServiceSettings settings);
+        Individual GetIndividual(int id, int treeId);
 
         /// <summary>
-        ///   Retrieves a collection of individuals
+        /// Retrieves all the individuals for a particular tree
         /// </summary>
-        /// <param name = "settings">A <see cref = "IndividualServiceSettings" /> object that contains settings 
-        /// to control the individuals returned</param>
+        /// <param name="treeId">The Id of the tree</param>
         /// <returns>A collection of <see cref = "Individual" objects /></returns>
-        IEnumerable<Individual> GetIndividuals(IndividualServiceSettings settings);
+        IEnumerable<Individual> GetIndividuals(int treeId);
 
-        /// <summary>
-        /// Retrieves all the spouses of an Individual
-        /// </summary>
-        /// <param name = "individualId">The Id of the Individual</param>
-        /// <param name = "settings">A <see cref = "IndividualServiceSettings" /> object that contains settings 
-        /// to control the individuals returned</param>
-        /// <returns>An <see cref = "IList{Individual}" />.</returns>
-        IList<Individual> GetSpouses(int individualId, IndividualServiceSettings settings);
+        ///// <summary>
+        ///// Retrieves all the spouses of an Individual
+        ///// </summary>
+        ///// <param name = "individualId">The Id of the Individual</param>
+        ///// <param name = "settings">A <see cref = "IndividualServiceSettings" /> object that contains settings 
+        ///// to control the individuals returned</param>
+        ///// <returns>An <see cref = "IList{Individual}" />.</returns>
+        //IList<Individual> GetSpouses(int individualId, IndividualServiceSettings settings);
 
         /// <summary>
         ///   Updates an individual in the data store.

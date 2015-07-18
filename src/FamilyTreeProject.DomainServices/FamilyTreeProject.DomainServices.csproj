@@ -55,7 +55,6 @@
     <Compile Include="IFamilyService.cs" />
     <Compile Include="IIndividualService.cs" />
     <Compile Include="IndividualService.cs" />
-    <Compile Include="IndividualServiceSettings.cs" />
     <Compile Include="INoteService.cs" />
     <Compile Include="ITreeService.cs" />
     <Compile Include="NoteService.cs" />
