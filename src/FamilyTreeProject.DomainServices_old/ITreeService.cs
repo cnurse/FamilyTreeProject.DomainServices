@@ -6,14 +6,20 @@
 //                                         *
 // *****************************************
 
-using FamilyTreeProject.DomainServices.Common;
+using System.Collections.Generic;
 
 namespace FamilyTreeProject.DomainServices
 {
-    /// <summary>
-    /// An interface that represents the Families Service
-    /// </summary>
-    public interface IFamilyService : IEntityService<Family>
+    public interface ITreeService
     {
+        void AddTree(Tree tree);
+
+        void DeleteTree(Tree tree);
+
+        Tree GetTree(int treeId);
+
+        IEnumerable<Tree> GetTrees();
+
+        void UpdateTree(Tree tree);
     }
 }

@@ -6,10 +6,8 @@
 //                                         *
 // *****************************************
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Naif.Core.Collections;
 using Naif.Core.Contracts;
 using Naif.Data;
 
@@ -41,7 +39,7 @@ namespace FamilyTreeProject.DomainServices
         ///   of <paramref name = "note" /> to the id of the new note.
         /// </summary>
         /// <param name = "note">The note to add to the data store.</param>
-        public void Add(Note note)
+        public void AddNote(Note note)
         {
             //Contract
             Requires.NotNull(note);
@@ -57,7 +55,7 @@ namespace FamilyTreeProject.DomainServices
         ///   The delete operation takes effect immediately
         /// </remarks>
         /// <param name = "note">The note to delete</param>
-        public void Delete(Note note)
+        public void DeleteNote(Note note)
         {
             //Contract
             Requires.NotNull(note);
@@ -70,47 +68,28 @@ namespace FamilyTreeProject.DomainServices
         ///   Retrieves a single Note
         /// </summary>
         /// <param name = "id">The Id of the Note to retrieve</param>
-        /// <param name="treeId">The Id of the tree</param>
-        /// <returns>A <see cref = "Note" /></returns>
-        public Note Get(int id, int treeId)
+        /// <returns>An <see cref = "Note" /></returns>
+        public Note GetNote(int id)
         {
             //Contract
             Requires.NotNegative("id", id);
 
-            return Get(treeId).SingleOrDefault(n => n.Id == id);
+            return _repository.GetAll().SingleOrDefault(n => n.Id == id);
         }
 
-        /// <summary>
-        /// Retrieves all the notes for a Tree
-        /// </summary>
-        /// <param name = "treeId">The Id of the Tree</param>
-        /// <returns>A collection of <see cref = "Note" /> objects</returns>
-        public IEnumerable<Note> Get(int treeId)
+        public IEnumerable<Note> GetNotes(int treeId)
         {
             //Contract
             Requires.NotNegative("treeId", treeId);
 
-            return _repository.Get(treeId);
-        }
-
-        /// <summary>
-        /// Gets a page of notes based on a predicate
-        /// </summary>
-        /// <param name="treeId">The Id of the tree</param>
-        /// <param name="predicate">The predicate to use</param>
-        /// <param name="pageIndex">The page index to return</param>
-        /// <param name="pageSize">The page size</param>
-        /// <returns>List of notes</returns>
-        public IPagedList<Note> Get(int treeId, Func<Note, bool> predicate, int pageIndex, int pageSize)
-        {
-            return new PagedList<Note>(Get(treeId).Where(predicate), pageIndex, pageSize);
+            return _repository.Find(ind => ind.TreeId == treeId);
         }
 
         /// <summary>
         ///   Updates a note in the data store.
         /// </summary>
         /// <param name = "note">The note to update in the data store.</param>
-        public void Update(Note note)
+        public void UpdateNote(Note note)
         {
             //Contract
             Requires.NotNull(note);

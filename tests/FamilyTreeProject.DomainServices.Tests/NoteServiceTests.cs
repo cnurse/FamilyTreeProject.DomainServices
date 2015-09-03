@@ -9,18 +9,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using FamilyTreeProject.TestUtilities;
 using Moq;
+using Naif.Core.Collections;
 using Naif.Data;
 using NUnit.Framework;
+
+// ReSharper disable ObjectCreationAsStatement
 
 namespace FamilyTreeProject.DomainServices.Tests
 {
     [TestFixture]
     public class NoteServiceTests
     {
-        private NoteService service;
+        private NoteService _service;
+        private Mock<IUnitOfWork> _mockUnitOfWork;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
+        }
 
         [Test]
         public void NoteService_Constructor_Throws_If_UnitOfWork_Argument_Is_Null()
@@ -29,18 +38,18 @@ namespace FamilyTreeProject.DomainServices.Tests
         }
 
         [Test]
-        public void NoteService_AddNote_Throws_On_Null_Note()
+        public void NoteService_Add_Throws_On_Null_Note()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new NoteService(mockUnitOfWork.Object);
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
+            _service = new NoteService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<ArgumentNullException>(() => service.AddNote(null));
+            Assert.Throws<ArgumentNullException>(() => _service.Add(null));
         }
 
         [Test]
-        public void NoteService_AddNote_Calls_Repsoitory_AddNote_Method_With_The_Same_Note_Object_It_Recieved()
+        public void NoteService_Add_Calls_Repsoitory_Add_Method_With_The_Same_Note_Object_It_Recieved()
         {
             // Create test data
             var newNote = new Note
@@ -49,22 +58,22 @@ namespace FamilyTreeProject.DomainServices.Tests
             };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new NoteService(mockUnitOfWork.Object);
+            _service = new NoteService(_mockUnitOfWork.Object);
 
             //Act
-            service.AddNote(newNote);
+            _service.Add(newNote);
 
             //Assert
             mockRepository.Verify(r => r.Add(newNote));
         }
 
         [Test]
-        public void NoteService_AddNote_Calls_UnitOfWork_Commit_Method()
+        public void NoteService_Add_Calls_UnitOfWork_Commit_Method()
         {
             // Create test data
             var newNote = new Note
@@ -73,33 +82,33 @@ namespace FamilyTreeProject.DomainServices.Tests
             };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new NoteService(mockUnitOfWork.Object);
+            _service = new NoteService(_mockUnitOfWork.Object);
 
             //Act
-            service.AddNote(newNote);
+            _service.Add(newNote);
 
             //Assert
-            mockUnitOfWork.Verify(db => db.Commit());
+            _mockUnitOfWork.Verify(db => db.Commit());
         }
 
         [Test]
-        public void NoteService_DeleteNote_Throws_On_Null_Note()
+        public void NoteService_Delete_Throws_On_Null_Note()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new NoteService(mockUnitOfWork.Object);
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
+            _service = new NoteService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<ArgumentNullException>(() => service.DeleteNote(null));
+            Assert.Throws<ArgumentNullException>(() => _service.Delete(null));
         }
 
         [Test]
-        public void FamilyService_DeleteNote_Calls_Repsoitory_Delete_Method_With_The_Same_Note_Object_It_Recieved()
+        public void NoteService_Delete_Calls_Repsoitory_Delete_Method_With_The_Same_Note_Object_It_Recieved()
         {
             // Create test data
             var newNote = new Note
@@ -108,22 +117,22 @@ namespace FamilyTreeProject.DomainServices.Tests
             };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new NoteService(mockUnitOfWork.Object);
+            _service = new NoteService(_mockUnitOfWork.Object);
 
             //Act
-            service.DeleteNote(newNote);
+            _service.Delete(newNote);
 
             //Assert
             mockRepository.Verify(r => r.Delete(newNote));
         }
 
         [Test]
-        public void NoteService_DeleteNote_Calls_UnitOfWork_Commit_Method()
+        public void NoteService_Delete_Calls_UnitOfWork_Commit_Method()
         {
             // Create test data
             var newNote = new Note
@@ -132,127 +141,208 @@ namespace FamilyTreeProject.DomainServices.Tests
             };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new NoteService(mockUnitOfWork.Object);
+            _service = new NoteService(_mockUnitOfWork.Object);
 
             //Act
-            service.DeleteNote(newNote);
+            _service.Delete(newNote);
 
             //Assert
-            mockUnitOfWork.Verify(d => d.Commit());
+            _mockUnitOfWork.Verify(d => d.Commit());
         }
 
         [Test]
-        public void NoteService_GetNote_Throws_On_Negative_Id()
+        public void NoteService_Get_Throws_On_Negative_Id()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new NoteService(mockUnitOfWork.Object);
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
+            _service = new NoteService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<IndexOutOfRangeException>(() => service.GetNote(-1));
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1, It.IsAny<int>()));
         }
 
         [Test]
-        public void NoteService_GetNote_Calls_Repository_GetAll()
+        public void NoteService_Get_Throws_On_Negative_TreeId()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
+            _service = new NoteService(_mockUnitOfWork.Object);
+
+            //Assert
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(It.IsAny<int>(), -1));
+        }
+
+        [Test]
+        public void NoteService_Get_Calls_Repository_GetAll()
+        {
+            //Arrange
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
-            service = new NoteService(mockUnitOfWork.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
+
+            _service = new NoteService(_mockUnitOfWork.Object);
+
             const int id = TestConstants.ID_Exists;
 
             //Act
-            service.GetNote(id);
+            _service.Get(id, TestConstants.TREE_Id);
 
             //Assert
-            mockRepository.Verify(r => r.GetAll());
+            mockRepository.Verify(r => r.Get(TestConstants.TREE_Id));
         }
 
         [Test]
-        public void NoteService_GetNote_Returns_Note_On_Valid_Id()
+        public void NoteService_Get_Returns_Note_On_Valid_Id()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
-            mockRepository.Setup(r => r.GetAll())
-                                .Returns(GetNotes());
-            service = new NoteService(mockUnitOfWork.Object);
+            mockRepository.Setup(r => r.Get(It.IsAny<int>())).Returns(GetNotes(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
+
+            _service = new NoteService(_mockUnitOfWork.Object);
             const int id = TestConstants.ID_Exists;
 
             //Act
-            Note note = service.GetNote(id);
+            var note = _service.Get(id, TestConstants.TREE_Id);
 
             //Assert
             Assert.IsInstanceOf<Note>(note);
         }
 
         [Test]
-        public void NoteService_GetNote_Returns_Null_On_InValid_Id()
+        public void NoteService_Get_Returns_Null_On_InValid_Id()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
-            mockRepository.Setup(r => r.GetAll())
-                                .Returns(GetNotes());
-            service = new NoteService(mockUnitOfWork.Object);
+            mockRepository.Setup(r => r.GetAll()).Returns(GetNotes(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
+
+            _service = new NoteService(_mockUnitOfWork.Object);
             const int id = TestConstants.ID_NotFound;
 
             //Act
-            var note = service.GetNote(id);
+            var note = _service.Get(id, TestConstants.TREE_Id);
 
             //Assert
             Assert.IsNull(note);
         }
 
         [Test]
-        public void NoteService_GetNotes_Throws_On_Negative_TreeId()
+        public void NoteService_Get_Overload_Throws_On_Negative_TreeId()
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new NoteService(mockUnitOfWork.Object);
+            _service = new NoteService(mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<IndexOutOfRangeException>(() => service.GetNotes(-1));
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1));
         }
 
         [Test]
-        public void NoteService_GetNotes_Calls_Repository_Find()
+        public void NoteService_Get_Overload_Calls_Repository_Get()
         {
             //Arrange
             var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Note>>();
             mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
-            service = new NoteService(mockUnitOfWork.Object);
+            _service = new NoteService(mockUnitOfWork.Object);
             const int treeId = TestConstants.TREE_Id;
 
             //Act
-            service.GetNotes(treeId);
+            _service.Get(treeId);
 
             //Assert
-            mockRepository.Verify(r => r.Find(It.IsAny<Expression<Func<Note, bool>>>()));
+            mockRepository.Verify(r => r.Get(treeId));
         }
 
         [Test]
-        public void NoteService_UpdateNote_Throws_On_Null_Note()
+        public void NoteService_Get_Overload_Returns_List_Of_Notes()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new NoteService(mockUnitOfWork.Object);
+            var mockRepository = new Mock<IRepository<Note>>();
+            mockRepository.Setup(r => r.Get(It.IsAny<int>())).Returns(GetNotes(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(u => u.GetRepository<Note>()).Returns(mockRepository.Object);
+
+            _service = new NoteService(_mockUnitOfWork.Object);
+            const int treeId = TestConstants.TREE_Id;
+
+            //Act
+            var notes = _service.Get(treeId);
 
             //Assert
-            Assert.Throws<ArgumentNullException>(() => service.AddNote(null));
+            Assert.IsInstanceOf<IEnumerable<Note>>(notes);
+            Assert.AreEqual(TestConstants.PAGE_TotalCount, notes.Count());
         }
 
         [Test]
-        public void NoteService_UpdateNote_Calls_Repository_Update_Method_With_The_Same_Note_Object_It_Recieved()
+        public void NoteService_Get_ByPage_Overload_Throws_On_Negative_TreeId()
+        {
+            //Arrange
+            _service = new NoteService(_mockUnitOfWork.Object);
+
+            //Assert
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1, t => true, 0, TestConstants.PAGE_RecordCount));
+        }
+
+        [Test]
+        public void NoteService_Get_ByPage_Overload_Calls_Repository_Get()
+        {
+            //Arrange
+            var mockRepository = new Mock<IRepository<Note>>();
+            _mockUnitOfWork.Setup(u => u.GetRepository<Note>()).Returns(mockRepository.Object);
+
+            _service = new NoteService(_mockUnitOfWork.Object);
+            const int treeId = TestConstants.TREE_Id;
+
+            //Act
+            _service.Get(treeId, t => true, 0, TestConstants.PAGE_RecordCount);
+
+            //Assert
+            mockRepository.Verify(r => r.Get(It.IsAny<int>()));
+        }
+
+        [Test]
+        public void NoteService_Get_ByPage_Overload_Returns_PagedList_Of_Notes()
+        {
+            //Arrange
+            var mockRepository = new Mock<IRepository<Note>>();
+            mockRepository.Setup(r => r.Get(It.IsAny<int>())).Returns(GetNotes(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(u => u.GetRepository<Note>()).Returns(mockRepository.Object);
+
+            _service = new NoteService(_mockUnitOfWork.Object);
+            const int treeId = TestConstants.TREE_Id;
+
+            //Act
+            var notes = _service.Get(treeId, t => true, 0, TestConstants.PAGE_RecordCount);
+
+            //Assert
+            Assert.IsInstanceOf<IPagedList<Note>>(notes);
+            Assert.AreEqual(TestConstants.PAGE_TotalCount, notes.TotalCount);
+            Assert.AreEqual(TestConstants.PAGE_RecordCount, notes.PageSize);
+        }
+
+        [Test]
+        public void NoteService_Update_Throws_On_Null_Note()
+        {
+            //Arrange
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
+
+            //Arrange
+            _service = new NoteService(_mockUnitOfWork.Object);
+
+            //Assert
+            Assert.Throws<ArgumentNullException>(() => _service.Add(null));
+        }
+
+        [Test]
+        public void NoteService_Update_Calls_Repository_Update_Method_With_The_Same_Note_Object_It_Recieved()
         {
             // Create test data
             var note = new Note
@@ -261,22 +351,22 @@ namespace FamilyTreeProject.DomainServices.Tests
             };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new NoteService(mockUnitOfWork.Object);
+            _service = new NoteService(_mockUnitOfWork.Object);
 
             //Act
-            service.UpdateNote(note);
+            _service.Update(note);
 
             //Assert
             mockRepository.Verify(r => r.Update(note));
         }
 
         [Test]
-        public void NoteService_UpdateNote_Calls_UnitOfWork_Commit_Method_()
+        public void NoteService_Update_Calls_UnitOfWork_Commit_Method_()
         {
             // Create test data
             var note = new Note
@@ -285,35 +375,35 @@ namespace FamilyTreeProject.DomainServices.Tests
             };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Note>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Note>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new NoteService(mockUnitOfWork.Object);
+            _service = new NoteService(_mockUnitOfWork.Object);
 
             //Act
-            service.UpdateNote(note);
+            _service.Update(note);
 
             //Assert
-            mockUnitOfWork.Verify(db => db.Commit());
+            _mockUnitOfWork.Verify(db => db.Commit());
         }
 
-        private static IQueryable<Note> GetNotes()
+        private static IQueryable<Note> GetNotes(int count)
         {
-            var Notes = new List<Note>();
+            var notes = new List<Note>();
 
-            for (int i = 0; i < TestConstants.PAGE_TotalCount; i++)
+            for (int i = 0; i < count; i++)
             {
-                Notes.Add(new Note
-                {
-                    Id = i,
-                    Text = "Foo",
-                    TreeId = TestConstants.TREE_Id,
-                });
+                notes.Add(new Note
+                                {
+                                    Id = i,
+                                    Text = "Foo",
+                                    TreeId = TestConstants.TREE_Id,
+                                });
             }
 
-            return Notes.AsQueryable();
+            return notes.AsQueryable();
         }
     }
 }

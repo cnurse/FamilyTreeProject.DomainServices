@@ -6,9 +6,7 @@
 //                                         *
 // *****************************************
 
-using System;
 using System.Collections.Generic;
-using Naif.Core.Collections;
 
 namespace FamilyTreeProject.DomainServices
 {
@@ -19,7 +17,7 @@ namespace FamilyTreeProject.DomainServices
         ///   of <paramref name = "newNote" /> to the id of the new note.
         /// </summary>
         /// <param name = "newNote">The note to add to the data store.</param>
-        void Add(Note newNote);
+        void AddNote(Note newNote);
 
         /// <summary>
         ///   Deletes a note from the data store
@@ -28,37 +26,21 @@ namespace FamilyTreeProject.DomainServices
         ///   The delete operation takes effect immediately
         /// </remarks>
         /// <param name = "note">The note to delete</param>
-        void Delete(Note note);
+        void DeleteNote(Note note);
 
         /// <summary>
         ///   Retrieves a single Note
         /// </summary>
         /// <param name = "id">The Id of the Note to retrieve</param>
-        /// <param name="treeId">The Id of the tree</param>
-        /// <returns>A <see cref = "Note" /></returns>
-        Note Get(int treeId, int id);
+        /// <returns>An <see cref = "Note" /></returns>
+        Note GetNote(int id);
 
-        /// <summary>
-        /// Retrieves all the notes for a Tree
-        /// </summary>
-        /// <param name = "treeId">The Id of the Tree</param>
-        /// <returns>A collection of <see cref = "Note" /> objects</returns>
-        IEnumerable<Note> Get(int treeId);
-
-        /// <summary>
-        /// Gets a page of notes based on a predicate
-        /// </summary>
-        /// <param name="treeId">The Id of the tree</param>
-        /// <param name="predicate">The predicate to use</param>
-        /// <param name="pageIndex">The page index to return</param>
-        /// <param name="pageSize">The page size</param>
-        /// <returns>List of notes</returns>
-        IPagedList<Note> Get(int treeId, Func<Note, bool> predicate, int pageIndex, int pageSize);
+        IEnumerable<Note> GetNotes(int treeId);
 
         /// <summary>
         ///   Updates a note in the data store.
         /// </summary>
         /// <param name = "note">The note to update in the data store.</param>
-        void Update(Note note);
+        void UpdateNote(Note note);
     }
 }

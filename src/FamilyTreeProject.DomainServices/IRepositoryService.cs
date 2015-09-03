@@ -11,9 +11,9 @@ using FamilyTreeProject.DomainServices.Common;
 namespace FamilyTreeProject.DomainServices
 {
     /// <summary>
-    /// An interface that represents the Families Service
+    /// An interface that represents the Repository Service
     /// </summary>
-    public interface IFamilyService : IEntityService<Family>
+    public interface IRepositoryService : IEntityService<Repository>
     {
     }
 }

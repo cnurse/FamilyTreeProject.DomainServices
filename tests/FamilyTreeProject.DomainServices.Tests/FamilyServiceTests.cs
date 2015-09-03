@@ -9,9 +9,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using FamilyTreeProject.TestUtilities;
 using Moq;
+using Naif.Core.Collections;
 using Naif.Data;
 using NUnit.Framework;
 
@@ -20,369 +20,381 @@ namespace FamilyTreeProject.DomainServices.Tests
     [TestFixture]
     public class FamilyServiceTests
     {
-        private FamilyService service;
+        private FamilyService _service;
+        private Mock<IUnitOfWork> _mockUnitOfWork;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
+        }
 
         [Test]
         public void FamilyService_Constructor_Throws_If_UnitOfWork_Argument_Is_Null()
         {
+            // ReSharper disable once ObjectCreationAsStatement
             Assert.Throws<ArgumentNullException>(() => new FamilyService(null));
         }
 
         [Test]
-        public void FamilyService_AddFamily_Throws_On_Null_Family()
+        public void FamilyService_Add_Throws_On_Null_Family()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new FamilyService(mockUnitOfWork.Object);
+            _service = new FamilyService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<ArgumentNullException>(() => service.AddFamily(null));
+            Assert.Throws<ArgumentNullException>(() => _service.Add(null));
         }
 
         [Test]
-        public void FamilyService_AddFamily_Calls_Repsoitory_Add_Method_With_The_Same_Family_Object_It_Recieved()
+        public void FamilyService_Add_Calls_Repository_Add_Method_With_The_Same_Family_Object_It_Recieved()
         {
             // Create test data
             var newFamily = new Family
-            {
-                Husband = new Individual
-                {
-                    FirstName = "Foo",
-                    LastName = "Bar"
-                },
-                Wife = new Individual
-                {
-                    FirstName = "Bas",
-                    LastName = "Bar"
-                }
-            };
+                                {
+                                    WifeId = TestConstants.ID_WifeId,
+                                    HusbandId = TestConstants.ID_HusbandId
+                                };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new FamilyService(mockUnitOfWork.Object);
+            _service = new FamilyService(_mockUnitOfWork.Object);
 
             //Act
-            service.AddFamily(newFamily);
+            _service.Add(newFamily);
 
             //Assert
             mockRepository.Verify(r => r.Add(newFamily));
         }
 
         [Test]
-        public void FamilyService_AddFamily_Calls_UnitOfWork_Commit_Method()
+        public void FamilyService_Add_Calls_UnitOfWork_Commit_Method()
         {
             // Create test data
             var newFamily = new Family
-            {
-                Husband = new Individual
-                {
-                    FirstName = "Foo",
-                    LastName = "Bar"
-                },
-                Wife = new Individual
-                {
-                    FirstName = "Bas",
-                    LastName = "Bar"
-                }
-            };
+                                    {
+                                        WifeId = TestConstants.ID_WifeId,
+                                        HusbandId = TestConstants.ID_HusbandId
+                                    };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new FamilyService(mockUnitOfWork.Object);
+            _service = new FamilyService(_mockUnitOfWork.Object);
 
             //Act
-            service.AddFamily(newFamily);
+            _service.Add(newFamily);
 
             //Assert
-            mockUnitOfWork.Verify(db => db.Commit());
+            _mockUnitOfWork.Verify(db => db.Commit());
         }
 
         [Test]
-        public void FamilyService_DeleteFamily_Throws_On_Null_Family()
+        public void FamilyService_Delete_Throws_On_Null_Family()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new FamilyService(mockUnitOfWork.Object);
+            _service = new FamilyService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<ArgumentNullException>(() => service.DeleteFamily(null));
+            Assert.Throws<ArgumentNullException>(() => _service.Delete(null));
         }
 
         [Test]
-        public void FamilyService_DeleteFamily_Calls_Repsoitory_Delete_Method_With_The_Same_Family_Object_It_Recieved()
+        public void FamilyService_Delete_Calls_Repsoitory_Delete_Method_With_The_Same_Family_Object_It_Recieved()
         {
             // Create test data
             var newFamily = new Family
-            {
-                Husband = new Individual
-                {
-                    FirstName = "Foo",
-                    LastName = "Bar"
-                },
-                Wife = new Individual
-                {
-                    FirstName = "Bas",
-                    LastName = "Bar"
-                }
-            };
+                                    {
+                                        WifeId = TestConstants.ID_WifeId,
+                                        HusbandId = TestConstants.ID_HusbandId
+                                    };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new FamilyService(mockUnitOfWork.Object);
+            _service = new FamilyService(_mockUnitOfWork.Object);
 
             //Act
-            service.DeleteFamily(newFamily);
+            _service.Delete(newFamily);
 
             //Assert
             mockRepository.Verify(r => r.Delete(newFamily));
         }
 
         [Test]
-        public void FamilyService_DeleteFamily_Calls_UnitOfWork_Commit_Method()
+        public void FamilyService_Delete_Calls_UnitOfWork_Commit_Method()
         {
             // Create test data
             var newFamily = new Family
-            {
-                Husband = new Individual
-                {
-                    FirstName = "Foo",
-                    LastName = "Bar"
-                },
-                Wife = new Individual
-                {
-                    FirstName = "Bas",
-                    LastName = "Bar"
-                }
-            };
+                                    {
+                                        WifeId = TestConstants.ID_WifeId,
+                                        HusbandId = TestConstants.ID_HusbandId
+                                    };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new FamilyService(mockUnitOfWork.Object);
+            _service = new FamilyService(_mockUnitOfWork.Object);
 
             //Act
-            service.DeleteFamily(newFamily);
+            _service.Delete(newFamily);
 
             //Assert
-            mockUnitOfWork.Verify(db => db.Commit());
+            _mockUnitOfWork.Verify(db => db.Commit());
         }
 
         [Test]
-        public void FamilyService_GetFamily_Throws_On_Negative_Id()
+        public void FamilyService_Get_Throws_On_Negative_TreeId()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new FamilyService(mockUnitOfWork.Object);
+            _service = new FamilyService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<IndexOutOfRangeException>(() => service.GetFamily(-1, false));
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(It.IsAny<int>(), -1));
         }
 
         [Test]
-        public void FamilyService_GetFamily_Calls_Repository_GetAll()
+        public void FamilyService_Get_Throws_On_Negative_Id()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            _service = new FamilyService(_mockUnitOfWork.Object);
+
+            //Assert
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1, It.IsAny<int>()));
+        }
+
+        [Test]
+        public void FamilyService_Get_Calls_Repository_Get()
+        {
+            //Arrange
             var mockRepository = new Mock<IRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
-            mockRepository.Setup(r => r.GetAll())
-                                .Returns(GetFamilies());
-            service = new FamilyService(mockUnitOfWork.Object);
+            _mockUnitOfWork.Setup(u => u.GetRepository<Family>()).Returns(mockRepository.Object);
+
+            _service = new FamilyService(_mockUnitOfWork.Object);
             const int id = TestConstants.ID_Exists;
 
             //Act
-            service.GetFamily(id, false);
+            _service.Get(id, It.IsAny<int>());
 
             //Assert
-            mockRepository.Verify(r => r.GetAll());
+            mockRepository.Verify(r => r.Get(It.IsAny<int>()));
         }
 
         [Test]
-        public void FamilyService_GetFamily_Returns_Family_On_Valid_Id()
+        public void FamilyService_Get_Returns_Family_On_Valid_Id()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
-            mockRepository.Setup(r => r.GetAll())
-                                .Returns(GetFamilies());
-            service = new FamilyService(mockUnitOfWork.Object);
+            mockRepository.Setup(r => r.Get(It.IsAny<int>())).Returns(GetFamilys(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(u => u.GetRepository<Family>()).Returns(mockRepository.Object);
+
+            _service = new FamilyService(_mockUnitOfWork.Object);
             const int id = TestConstants.ID_Exists;
 
             //Act
-            var family = service.GetFamily(id, false);
+            var family = _service.Get(id, It.IsAny<int>());
 
             //Assert
             Assert.IsInstanceOf<Family>(family);
         }
 
         [Test]
-        public void FamilyService_GetFamily_Returns_Null_On_InValid_Id()
+        public void FamilyService_Get_Returns_Null_On_InValid_Id()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
-            mockRepository.Setup(r => r.GetAll())
-                                .Returns(GetFamilies());
-            service = new FamilyService(mockUnitOfWork.Object);
+            mockRepository.Setup(r => r.Get(It.IsAny<int>())).Returns(GetFamilys(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(u => u.GetRepository<Family>()).Returns(mockRepository.Object);
+
+            _service = new FamilyService(_mockUnitOfWork.Object);
             const int id = TestConstants.ID_NotFound;
 
             //Act
-            var family = service.GetFamily(id, false);
+            var family = _service.Get(id, It.IsAny<int>());
 
             //Assert
             Assert.IsNull(family);
         }
 
         [Test]
-        public void FamilyService_GetFamilies_Throws_On_Negative_TreeId()
+        public void FamilyService_Get_Overload_Throws_On_Negative_TreeId()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new FamilyService(mockUnitOfWork.Object);
+            _service = new FamilyService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<IndexOutOfRangeException>(() => service.GetFamilies(-1, false));
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1));
         }
 
         [Test]
-        public void FamilyService_GetFamilies_Calls_Repository_Find()
+        public void FamilyService_Get_Overload_Calls_Repository_Get()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
-            mockRepository.Setup(r => r.Find(It.IsAny<Expression<Func<Family, bool>>>()))
-                                .Returns(GetFamilies());
-            service = new FamilyService(mockUnitOfWork.Object);
+            _mockUnitOfWork.Setup(u => u.GetRepository<Family>()).Returns(mockRepository.Object);
+
+            _service = new FamilyService(_mockUnitOfWork.Object);
             const int treeId = TestConstants.TREE_Id;
 
             //Act
-            service.GetFamilies(treeId, false);
+            _service.Get(treeId);
 
             //Assert
-            mockRepository.Verify(r => r.Find(It.IsAny<Expression<Func<Family, bool>>>()));
+            mockRepository.Verify(r => r.Get(It.IsAny<int>()));
         }
 
         [Test]
-        public void FamilyService_UpdateFamily_Throws_On_Null_Family()
+        public void FamilyService_Get_Overload_Returns_List_Of_Familys()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new FamilyService(mockUnitOfWork.Object);
+            var mockRepository = new Mock<IRepository<Family>>();
+            mockRepository.Setup(r => r.Get(It.IsAny<int>())).Returns(GetFamilys(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(u => u.GetRepository<Family>()).Returns(mockRepository.Object);
+
+            _service = new FamilyService(_mockUnitOfWork.Object);
+            const int treeId = TestConstants.TREE_Id;
+
+            //Act
+            var familys = _service.Get(treeId);
 
             //Assert
-            Assert.Throws<ArgumentNullException>(() => service.AddFamily(null));
+            Assert.IsInstanceOf<IEnumerable<Family>>(familys);
+            Assert.AreEqual(TestConstants.PAGE_TotalCount, familys.Count());
         }
 
         [Test]
-        public void FamilyService_UpdateFamily_Calls_Repository_Update_Method_With_The_Same_Family_Object_It_Recieved()
+        public void FamilyService_Get_ByPage_Overload_Throws_On_Negative_TreeId()
+        {
+            //Arrange
+            _service = new FamilyService(_mockUnitOfWork.Object);
+
+            //Assert
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1, t => true, 0, TestConstants.PAGE_RecordCount));
+        }
+
+        [Test]
+        public void FamilyService_Get_ByPage_Overload_Calls_Repository_Get()
+        {
+            //Arrange
+            var mockRepository = new Mock<IRepository<Family>>();
+            _mockUnitOfWork.Setup(u => u.GetRepository<Family>()).Returns(mockRepository.Object);
+
+            _service = new FamilyService(_mockUnitOfWork.Object);
+            const int treeId = TestConstants.TREE_Id;
+
+            //Act
+            _service.Get(treeId, t => true, 0, TestConstants.PAGE_RecordCount);
+
+            //Assert
+            mockRepository.Verify(r => r.Get(It.IsAny<int>()));
+        }
+
+        [Test]
+        public void FamilyService_Get_ByPage_Overload_Returns_PagedList_Of_Familys()
+        {
+            //Arrange
+            var mockRepository = new Mock<IRepository<Family>>();
+            mockRepository.Setup(r => r.Get(It.IsAny<int>())).Returns(GetFamilys(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(u => u.GetRepository<Family>()).Returns(mockRepository.Object);
+
+            _service = new FamilyService(_mockUnitOfWork.Object);
+            const int treeId = TestConstants.TREE_Id;
+
+            //Act
+            var familys = _service.Get(treeId, t => true, 0, TestConstants.PAGE_RecordCount);
+
+            //Assert
+            Assert.IsInstanceOf<IPagedList<Family>>(familys);
+            Assert.AreEqual(TestConstants.PAGE_TotalCount, familys.TotalCount);
+            Assert.AreEqual(TestConstants.PAGE_RecordCount, familys.PageSize);
+        }
+
+
+        [Test]
+        public void FamilyService_Update_Throws_On_Null_Family()
+        {
+            //Arrange
+            _service = new FamilyService(_mockUnitOfWork.Object);
+
+            //Assert
+            Assert.Throws<ArgumentNullException>(() => _service.Update(null));
+        }
+
+        [Test]
+        public void FamilyService_Update_Calls_Repository_Update_Method_With_The_Same_Family_Object_It_Recieved()
         {
             // Create test data
             var family = new Family
-            {
-                Id = TestConstants.ID_Exists,
-                Husband = new Individual
-                {
-                    FirstName = "Foo",
-                    LastName = "Bar"
-                },
-                Wife = new Individual
-                {
-                    FirstName = "Bas",
-                    LastName = "Bar"
-                }
-            };
+                                    {
+                                        Id = TestConstants.ID_Exists,
+                                        WifeId = TestConstants.ID_WifeId,
+                                        HusbandId = TestConstants.ID_HusbandId
+                                    };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new FamilyService(mockUnitOfWork.Object);
+            _service = new FamilyService(_mockUnitOfWork.Object);
 
             //Act
-            service.UpdateFamily(family);
+            _service.Update(family);
 
             //Assert
             mockRepository.Verify(r => r.Update(family));
         }
 
         [Test]
-        public void FamilyService_UpdateFamily_Calls_UnitOfWork_Commit_Method()
+        public void FamilyService_Update_Calls_UnitOfWork_Commit_Method()
         {
             // Create test data
             var family = new Family
-            {
-                Id = TestConstants.ID_Exists,
-                Husband = new Individual
-                {
-                    FirstName = "Foo",
-                    LastName = "Bar"
-                },
-                Wife = new Individual
-                {
-                    FirstName = "Bas",
-                    LastName = "Bar"
-                }
-            };
+                                    {
+                                        Id = TestConstants.ID_Exists,
+                                        WifeId = TestConstants.ID_WifeId,
+                                        HusbandId = TestConstants.ID_HusbandId
+                                    };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Family>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Family>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new FamilyService(mockUnitOfWork.Object);
+            _service = new FamilyService(_mockUnitOfWork.Object);
 
             //Act
-            service.UpdateFamily(family);
+            _service.Update(family);
 
             //Assert
-            mockUnitOfWork.Verify(db => db.Commit());
+            _mockUnitOfWork.Verify(db => db.Commit());
         }
 
-        private static IQueryable<Family> GetFamilies()
+        private static IQueryable<Family> GetFamilys(int count)
         {
-            var Families = new List<Family>();
+            var familys = new List<Family>();
 
-            for (int i = 0; i < TestConstants.PAGE_TotalCount; i++)
+            for (int i = 0; i < count; i++)
             {
-                Families.Add(new Family
-                {
-                    Id = i,
-                    Husband = new Individual
-                    {
-                        FirstName = String.Format(TestConstants.IND_FirstName + "_Husband", i),
-                        LastName = (i <= TestConstants.IND_LastNameCount) ? TestConstants.IND_LastName : TestConstants.IND_AltLastName
-                    },
-                    Wife = new Individual
-                    {
-                        FirstName = String.Format(TestConstants.IND_FirstName + "_Wife", i),
-                        LastName = (i <= TestConstants.IND_LastNameCount) ? TestConstants.IND_LastName : TestConstants.IND_AltLastName
-                    },
-                    TreeId = TestConstants.TREE_Id,
-                });
+                familys.Add(new Family
+                                    {
+                                        Id = i,
+                                        WifeId = (i < 5 && i > 2) ? TestConstants.ID_WifeId : -1,
+                                        HusbandId = (i < 5 && i > 2) ? TestConstants.ID_HusbandId : -1,
+                                        TreeId = TestConstants.TREE_Id
+                                    });
             }
 
-            return Families.AsQueryable();
+            return familys.AsQueryable();
         }
     }
 }

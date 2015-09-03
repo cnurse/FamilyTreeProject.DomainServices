@@ -12,36 +12,48 @@ using System.Linq;
 using System.Linq.Expressions;
 using FamilyTreeProject.TestUtilities;
 using Moq;
+using Naif.Core.Caching;
+using Naif.Core.Collections;
 using Naif.Data;
 using NUnit.Framework;
+
+// ReSharper disable ObjectCreationAsStatement
 
 namespace FamilyTreeProject.DomainServices.Tests
 {
     [TestFixture]
     public class TreeServiceTests
     {
-        private TreeService service;
+        private TreeService _service;
+        private Mock<IUnitOfWork> _mockUnitOfWork;
 
+        [SetUp]
+        public void SetUp()
+        {
+            _mockUnitOfWork = new Mock<IUnitOfWork>();
+        }
 
         [Test]
         public void TreeService_Constructor_Throws_If_UnitOfWork_Argument_Is_Null()
         {
+            //Arrange
+
+            //Act,Assert
             Assert.Throws<ArgumentNullException>(() => new TreeService(null));
         }
 
         [Test]
-        public void TreeService_AddTree_Throws_On_Null_Tree()
+        public void TreeService_Add_Throws_On_Null_Tree()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new TreeService(mockUnitOfWork.Object);
+            _service = new TreeService(_mockUnitOfWork.Object);
 
-            //Assert
-            Assert.Throws<ArgumentNullException>(() => service.AddTree(null));
+            //Act,Assert
+            Assert.Throws<ArgumentNullException>(() => _service.Add(null));
         }
 
         [Test]
-        public void TreeService_AddTree_Calls_Repsoitory_AddTree_Method_With_The_Same_Tree_Object_It_Recieved()
+        public void TreeService_Add_Calls_Repsoitory_Add_Method_With_The_Same_Tree_Object_It_Recieved()
         {
             // Create test data
             var newTree = new Tree
@@ -49,23 +61,22 @@ namespace FamilyTreeProject.DomainServices.Tests
                                     Name = "Foo"
                                 };
 
-            //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
+            //SetUp Mock
             var mockRepository = new Mock<IRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new TreeService(mockUnitOfWork.Object);
+            _service = new TreeService(_mockUnitOfWork.Object);
 
             //Act
-            service.AddTree(newTree);
+            _service.Add(newTree);
 
             //Assert
             mockRepository.Verify(r => r.Add(newTree));
         }
 
         [Test]
-        public void TreeService_AddTree_Calls_UnitOfWork_Commit_Method()
+        public void TreeService_Add_Calls_UnitOfWork_Commit_Method()
         {
             // Create test data
             var newTree = new Tree
@@ -74,33 +85,31 @@ namespace FamilyTreeProject.DomainServices.Tests
             };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new TreeService(mockUnitOfWork.Object);
+            _service = new TreeService(_mockUnitOfWork.Object);
 
             //Act
-            service.AddTree(newTree);
+            _service.Add(newTree);
 
             //Assert
-            mockUnitOfWork.Verify(db => db.Commit());
+            _mockUnitOfWork.Verify(db => db.Commit());
         }
 
         [Test]
-        public void TreeService_DeleteTree_Throws_On_Null_Tree()
+        public void TreeService_Delete_Throws_On_Null_Tree()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new TreeService(mockUnitOfWork.Object);
+            _service = new TreeService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<ArgumentNullException>(() => service.DeleteTree(null));
+            Assert.Throws<ArgumentNullException>(() => _service.Delete(null));
         }
 
         [Test]
-        public void FamilyService_DeleteTree_Calls_Repsoitory_Delete_Method_With_The_Same_Tree_Object_It_Recieved()
+        public void TreeService_Delete_Calls_Repsoitory_Delete_Method_With_The_Same_Tree_Object_It_Recieved()
         {
             // Create test data
             var newTree = new Tree
@@ -109,22 +118,21 @@ namespace FamilyTreeProject.DomainServices.Tests
             };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new TreeService(mockUnitOfWork.Object);
+            _service = new TreeService(_mockUnitOfWork.Object);
 
             //Act
-            service.DeleteTree(newTree);
+            _service.Delete(newTree);
 
             //Assert
             mockRepository.Verify(r => r.Delete(newTree));
         }
 
         [Test]
-        public void TreeService_DeleteTree_Calls_UnitOfWork_Commit_Method()
+        public void TreeService_Delete_Calls_UnitOfWork_Commit_Method()
         {
             // Create test data
             var newTree = new Tree
@@ -133,176 +141,223 @@ namespace FamilyTreeProject.DomainServices.Tests
             };
 
             //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             //Arrange
-            service = new TreeService(mockUnitOfWork.Object);
+            _service = new TreeService(_mockUnitOfWork.Object);
 
             //Act
-            service.DeleteTree(newTree);
+            _service.Delete(newTree);
 
             //Assert
-            mockUnitOfWork.Verify(d => d.Commit());
+            _mockUnitOfWork.Verify(d => d.Commit());
         }
 
         [Test]
-        public void TreeService_GetTree_Throws_On_Negative_Id()
+        public void TreeService_Get_Throws_On_Negative_Id()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new TreeService(mockUnitOfWork.Object);
+            _service = new TreeService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<IndexOutOfRangeException>(() => service.GetTree(-1));
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1));
         }
 
         [Test]
-        public void TreeService_GetTree_Calls_Repository_GetAll()
+        public void TreeService_Get_Calls_Repository_GetAll()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
-            service = new TreeService(mockUnitOfWork.Object);
+            mockRepository.Setup(r => r.GetAll()).Returns(GetTrees(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+
+            _service = new TreeService(_mockUnitOfWork.Object);
             const int id = TestConstants.ID_Exists;
 
             //Act
-            service.GetTree(id);
+            _service.Get(id);
 
             //Assert
             mockRepository.Verify(r => r.GetAll());
         }
 
         [Test]
-        public void TreeService_GetTree_Returns_Tree_On_Valid_Id()
+        public void TreeService_Get_Returns_Tree_On_Valid_Id()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
-            mockRepository.Setup(r => r.GetAll())
-                                .Returns(GetTrees());
-            service = new TreeService(mockUnitOfWork.Object);
+            mockRepository.Setup(r => r.GetAll()).Returns(GetTrees(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+
+            _service = new TreeService(_mockUnitOfWork.Object);
             const int id = TestConstants.ID_Exists;
 
             //Act
-            Tree note = service.GetTree(id);
+            Tree tree = _service.Get(id);
 
             //Assert
-            Assert.IsInstanceOf<Tree>(note);
+            Assert.IsInstanceOf<Tree>(tree);
         }
 
         [Test]
-        public void TreeService_GetTree_Returns_Null_On_InValid_Id()
+        public void TreeService_Get_Returns_Null_On_InValid_Id()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
-            mockRepository.Setup(r => r.GetAll())
-                                .Returns(GetTrees());
-            service = new TreeService(mockUnitOfWork.Object);
+            mockRepository.Setup(r => r.GetAll()).Returns(GetTrees(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+
+            _service = new TreeService(_mockUnitOfWork.Object);
             const int id = TestConstants.ID_NotFound;
 
             //Act
-            var note = service.GetTree(id);
+            var tree = _service.Get(id);
 
             //Assert
-            Assert.IsNull(note);
+            Assert.IsNull(tree);
         }
 
         [Test]
-        public void TreeService_GetTrees_Calls_Repository_Find()
+        public void TreeService_Get_Overload_Calls_Repository_GetAll()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
             var mockRepository = new Mock<IRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
-            service = new TreeService(mockUnitOfWork.Object);
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+
+            _service = new TreeService(_mockUnitOfWork.Object);
 
             //Act
-            service.GetTrees();
+            _service.Get();
 
             //Assert
             mockRepository.Verify(r => r.GetAll());
         }
 
         [Test]
-        public void TreeService_UpdateTree_Throws_On_Null_Tree()
+        public void TreeService_Get_Overload_Returns_List_Of_Trees()
         {
             //Arrange
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            service = new TreeService(mockUnitOfWork.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            mockRepository.Setup(r => r.GetAll()).Returns(GetTrees(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+
+            _service = new TreeService(_mockUnitOfWork.Object);
+
+            //Act
+            var trees = _service.Get();
 
             //Assert
-            Assert.Throws<ArgumentNullException>(() => service.AddTree(null));
+            Assert.IsInstanceOf<IEnumerable<Tree>>(trees);
+            Assert.AreEqual(TestConstants.PAGE_TotalCount, trees.Count());
         }
 
         [Test]
-        public void TreeService_UpdateTree_Calls_Repository_Update_Method_With_The_Same_Tree_Object_It_Recieved()
+        public void TreeService_Get_ByPage_Overload_Calls_Repository_GetAll()
         {
-            // Create test data
-            var note = new Tree
-            {
-                Name = "Foo"
-            };
-
-            //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<IRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
-
             //Arrange
-            service = new TreeService(mockUnitOfWork.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+
+            _service = new TreeService(_mockUnitOfWork.Object);
 
             //Act
-            service.UpdateTree(note);
+            _service.Get(t => true, 0, 5);
 
             //Assert
-            mockRepository.Verify(r => r.Update(note));
+            mockRepository.Verify(r => r.GetAll());
         }
 
         [Test]
-        public void TreeService_UpdateTree_Calls_UnitOfWork_Commit_Method_()
+        public void TreeService_Get_ByPage_Overload_Returns_PagedList_Of_Trees()
         {
-            // Create test data
-            var note = new Tree
-            {
-                Name = "Foo"
-            };
-
-            //Create Mock
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockRepository = new Mock<IRepository<Tree>>();
-            mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
-
             //Arrange
-            service = new TreeService(mockUnitOfWork.Object);
+            var mockRepository = new Mock<IRepository<Tree>>();
+            mockRepository.Setup(r => r.GetAll()).Returns(GetTrees(TestConstants.PAGE_TotalCount));
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+
+            _service = new TreeService(_mockUnitOfWork.Object);
 
             //Act
-            service.UpdateTree(note);
+            var trees = _service.Get(t => true, 0, TestConstants.PAGE_RecordCount);
 
             //Assert
-            mockUnitOfWork.Verify(db => db.Commit());
+            Assert.IsInstanceOf<IPagedList<Tree>>(trees);
+            Assert.AreEqual(TestConstants.PAGE_TotalCount, trees.TotalCount);
+            Assert.AreEqual(TestConstants.PAGE_RecordCount, trees.PageSize);
         }
 
 
-        private static IQueryable<Tree> GetTrees()
+        [Test]
+        public void TreeService_Update_Throws_On_Null_Tree()
         {
-            var Trees = new List<Tree>();
+            //Arrange
+            _service = new TreeService(_mockUnitOfWork.Object);
 
-            for (int i = 0; i < TestConstants.PAGE_TotalCount; i++)
+            //Assert
+            Assert.Throws<ArgumentNullException>(() => _service.Add(null));
+        }
+
+        [Test]
+        public void TreeService_Update_Calls_Repository_Update_Method_With_The_Same_Tree_Object_It_Recieved()
+        {
+            // Create test data
+            var tree = new Tree
+                            {
+                                Name = "Foo"
+                            };
+
+            //Create Mock
+            var mockRepository = new Mock<IRepository<Tree>>();
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+
+            //Arrange
+            _service = new TreeService(_mockUnitOfWork.Object);
+
+            //Act
+            _service.Update(tree);
+
+            //Assert
+            mockRepository.Verify(r => r.Update(tree));
+        }
+
+        [Test]
+        public void TreeService_Update_Calls_UnitOfWork_Commit_Method_()
+        {
+            // Create test data
+            var tree = new Tree
+                            {
+                                Name = "Foo"
+                            };
+
+            //Create Mock
+            var mockRepository = new Mock<IRepository<Tree>>();
+            _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
+
+            //Arrange
+            _service = new TreeService(_mockUnitOfWork.Object);
+
+            //Act
+            _service.Update(tree);
+
+            //Assert
+            _mockUnitOfWork.Verify(db => db.Commit());
+        }
+
+        private static IQueryable<Tree> GetTrees(int count)
+        {
+            var trees = new List<Tree>();
+
+            for (int i = 0; i < count; i++)
             {
-                Trees.Add(new Tree
-                {
-                    TreeId = i,
-                    Name = "Foo"
-                });
+                trees.Add(new Tree
+                                {
+                                    TreeId = i,
+                                    Name = "Foo"
+                                });
             }
 
-            return Trees.AsQueryable();
+            return trees.AsQueryable();
         }
     }
 }
