@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FamilyTreeProject.DomainServices.Tests</RootNamespace>
     <AssemblyName>FamilyTreeProject.DomainServices.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -31,20 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq, Version=4.2.1507.118, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Moq">
+      <HintPath>..\..\..\FamilyTreeProject\src\packages\Moq.4.2.1506.2016\lib\net40\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Naif.Core">
-      <HintPath>..\..\packages\Naif.Core.1.3.0\lib\Naif.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Naif.Data, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Naif.Data.1.4.0\lib\Naif.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\FamilyTreeProject\src\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,13 +67,21 @@
       <Project>{ba58d9f1-31a6-4bde-9396-0aba7ee082d9}</Project>
       <Name>FamilyTreeProject.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\FamilyTreeProject\tests\FamilyTreeProject.TestUtilities\FamilyTreeProject.TestUtilities.csproj">
+      <Project>{e5b4368f-6bc1-46d8-9b4d-88fe08682aa1}</Project>
+      <Name>FamilyTreeProject.TestUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Naif.Core\src\Naif.Core\Naif.Core.csproj">
+      <Project>{92d29735-f300-4640-887c-b7ed827a1154}</Project>
+      <Name>Naif.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Naif.Data\src\Naif.Data\Naif.Data.csproj">
+      <Project>{da9a84cb-368e-489e-97d6-29345f3666bb}</Project>
+      <Name>Naif.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\FamilyTreeProject.DomainServices\FamilyTreeProject.DomainServices.csproj">
       <Project>{2baa8950-fd2a-4cbb-b938-7db939d108ec}</Project>
       <Name>FamilyTreeProject.DomainServices</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\FamilyTreeProject.TestUtilities\FamilyTreeProject.TestUtilities.csproj">
-      <Project>{e5b4368f-6bc1-46d8-9b4d-88fe08682aa1}</Project>
-      <Name>FamilyTreeProject.TestUtilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
