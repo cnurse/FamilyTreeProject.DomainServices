@@ -67,14 +67,16 @@
       <Project>{ba58d9f1-31a6-4bde-9396-0aba7ee082d9}</Project>
       <Name>FamilyTreeProject.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Naif.Core\src\Naif.Core\Naif.Core.csproj">
-      <Project>{92d29735-f300-4640-887c-b7ed827a1154}</Project>
-      <Name>Naif.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Naif.Data\src\Naif.Data\Naif.Data.csproj">
       <Project>{da9a84cb-368e-489e-97d6-29345f3666bb}</Project>
       <Name>Naif.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Naif.Core, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Naif.Core.1.4.0\lib\Naif.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
