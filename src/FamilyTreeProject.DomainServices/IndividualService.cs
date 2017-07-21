@@ -6,8 +6,9 @@
 //                                         *
 // *****************************************
 
+using FamilyTreeProject.Core;
+using FamilyTreeProject.Data;
 using FamilyTreeProject.DomainServices.Common;
-using Naif.Data;
 
 namespace FamilyTreeProject.DomainServices
 {
@@ -21,6 +22,6 @@ namespace FamilyTreeProject.DomainServices
         /// Constructs an Individuals Service to manage Individuals
         /// </summary>
         /// <param name = "unitOfWork">The Unit Of Work to use to retrieve data</param>
-        internal IndividualService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+        public IndividualService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
     }
 }

@@ -9,12 +9,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+using FamilyTreeProject.Collections;
+using FamilyTreeProject.Core;
+using FamilyTreeProject.Data;
 using FamilyTreeProject.TestUtilities;
 using Moq;
-using Naif.Core.Caching;
-using Naif.Core.Collections;
-using Naif.Data;
 using NUnit.Framework;
 
 // ReSharper disable ObjectCreationAsStatement
@@ -155,13 +154,13 @@ namespace FamilyTreeProject.DomainServices.Tests
         }
 
         [Test]
-        public void TreeService_Get_Throws_On_Negative_Id()
+        public void TreeService_Get_Throws_On_Null_Id()
         {
             //Arrange
             _service = new TreeService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1));
+            Assert.Throws<ArgumentException>(() => _service.Get(string.Empty));
         }
 
         [Test]
@@ -173,7 +172,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             _service = new TreeService(_mockUnitOfWork.Object);
-            const int id = TestConstants.ID_Exists;
+            const string id = TestConstants.ID_Exists;
 
             //Act
             _service.Get(id);
@@ -191,7 +190,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             _service = new TreeService(_mockUnitOfWork.Object);
-            const int id = TestConstants.ID_Exists;
+            const string id = TestConstants.ID_Exists;
 
             //Act
             Tree tree = _service.Get(id);
@@ -209,7 +208,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             _service = new TreeService(_mockUnitOfWork.Object);
-            const int id = TestConstants.ID_NotFound;
+            const string id = TestConstants.ID_NotFound;
 
             //Act
             var tree = _service.Get(id);
@@ -352,7 +351,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             {
                 trees.Add(new Tree
                                 {
-                                    TreeId = i,
+                                    TreeId = i.ToString(),
                                     Name = "Foo"
                                 });
             }

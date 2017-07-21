@@ -8,14 +8,14 @@
 
 using System;
 using System.Collections.Generic;
-using Naif.Core.Collections;
+using FamilyTreeProject.Collections;
 
 namespace FamilyTreeProject.DomainServices
 {
     public interface ITreeService
     {
         /// <summary>
-        ///   Adds a tree to the data store and sets the <see cref = "Tree.Id" /> property
+        ///   Adds a tree to the data store and sets the <see cref = "Tree.TreeId" /> property
         ///   of the <paramref name = "tree" /> to the id of the new tree.
         /// </summary>
         /// <param name = "tree">The tree to add to the data store.</param>
@@ -35,7 +35,7 @@ namespace FamilyTreeProject.DomainServices
         /// </summary>
         /// <param name = "treeId">The Id of the tree</param>
         /// <returns>A <see cref = "Tree" /></returns>
-        Tree Get(int treeId);
+        Tree Get(string treeId);
 
         /// <summary>
         /// Retrieves all the trees

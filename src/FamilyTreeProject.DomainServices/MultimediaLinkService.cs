@@ -6,8 +6,8 @@
 //                                         *
 //******************************************
 
+using FamilyTreeProject.Data;
 using FamilyTreeProject.DomainServices.Common;
-using Naif.Data;
 
 namespace FamilyTreeProject.DomainServices
 {
@@ -21,6 +21,6 @@ namespace FamilyTreeProject.DomainServices
         /// Constructs an MultimediaLink Service to manage Multimedia Links
         /// </summary>
         /// <param name = "unitOfWork">The Unit Of Work to use to retrieve data</param>
-        internal MultimediaLinkService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
+        public MultimediaLinkService(IUnitOfWork unitOfWork) : base(unitOfWork) { }
     }
 }

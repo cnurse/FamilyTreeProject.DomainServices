@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D1A88C95-10E5-4C08-9115-3241794B1988}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,6 +17,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTreeProject.DomainServices.Tests", "tests\FamilyTreeProject.DomainServices.Tests\FamilyTreeProject.DomainServices.Tests.csproj", "{BE1CBE2E-9DFA-40D3-AE3F-4CC2E6756638}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTreeProject.TestUtilities", "tests\FamilyTreeProject.TestUtilities\FamilyTreeProject.TestUtilities.csproj", "{E5B4368F-6BC1-46D8-9B4D-88FE08682AA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTreeProject.Core", "..\FamilyTreeProject.Core\src\FamilyTreeProject.Core\FamilyTreeProject.Core.csproj", "{BA58D9F1-31A6-4BDE-9396-0ABA7EE082D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,10 @@ Global
 		{E5B4368F-6BC1-46D8-9B4D-88FE08682AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5B4368F-6BC1-46D8-9B4D-88FE08682AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5B4368F-6BC1-46D8-9B4D-88FE08682AA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA58D9F1-31A6-4BDE-9396-0ABA7EE082D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA58D9F1-31A6-4BDE-9396-0ABA7EE082D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA58D9F1-31A6-4BDE-9396-0ABA7EE082D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA58D9F1-31A6-4BDE-9396-0ABA7EE082D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

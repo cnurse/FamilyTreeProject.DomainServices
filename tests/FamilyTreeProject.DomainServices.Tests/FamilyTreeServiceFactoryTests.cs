@@ -8,9 +8,8 @@
 
 
 using System;
+using FamilyTreeProject.Data;
 using Moq;
-using Naif.Core.Caching;
-using Naif.Data;
 using NUnit.Framework;
 
 namespace FamilyTreeProject.DomainServices.Tests
@@ -19,24 +18,12 @@ namespace FamilyTreeProject.DomainServices.Tests
     public class FamilyTreeServiceFactoryTests
     {
         private FamilyTreeServiceFactory _serviceFactory;
-        private Mock<ICacheProvider> _mockCache;
         private Mock<IUnitOfWork> _mockUnitOfWork;
 
         [SetUp]
         public void SetUp()
         {
-            _mockCache = new Mock<ICacheProvider>();
             _mockUnitOfWork = new Mock<IUnitOfWork>();
-        }
-
-        [Test]
-        public void FamilyTreeServiceFactory_Constructor_Throws_If_Cache_Argument_Is_Null()
-        {
-            //Arrange
-
-            //Act,Assert
-            // ReSharper disable once ObjectCreationAsStatement
-            Assert.Throws<ArgumentNullException>(() => new FamilyTreeServiceFactory(_mockUnitOfWork.Object, null));
         }
 
         [Test]
@@ -46,14 +33,14 @@ namespace FamilyTreeProject.DomainServices.Tests
 
             //Act,Assert
             // ReSharper disable once ObjectCreationAsStatement
-            Assert.Throws<ArgumentNullException>(() => new FamilyTreeServiceFactory(null, _mockCache.Object));
+            Assert.Throws<ArgumentNullException>(() => new FamilyTreeServiceFactory(null));
         }
 
         [Test]
         public void CreateFamilyService_Returns_FamilyService()
         {
             //Arrange
-            _serviceFactory = new FamilyTreeServiceFactory(_mockUnitOfWork.Object, _mockCache.Object);
+            _serviceFactory = new FamilyTreeServiceFactory(_mockUnitOfWork.Object);
 
             //Act
             var service = _serviceFactory.CreateFamilyService();
@@ -66,7 +53,7 @@ namespace FamilyTreeProject.DomainServices.Tests
         public void CreateIndividualService_Returns_IndividualService()
         {
             //Arrange
-            _serviceFactory = new FamilyTreeServiceFactory(_mockUnitOfWork.Object, _mockCache.Object);
+            _serviceFactory = new FamilyTreeServiceFactory(_mockUnitOfWork.Object);
 
             //Act
             var service = _serviceFactory.CreateIndividualService();
@@ -79,7 +66,7 @@ namespace FamilyTreeProject.DomainServices.Tests
         public void CreateTreeService_Returns_TreeService()
         {
             //Arrange
-            _serviceFactory = new FamilyTreeServiceFactory(_mockUnitOfWork.Object, _mockCache.Object);
+            _serviceFactory = new FamilyTreeServiceFactory(_mockUnitOfWork.Object);
 
             //Act
             var service = _serviceFactory.CreateIndividualService();

@@ -6,6 +6,7 @@
 //                                         *
 // *****************************************
 
+using FamilyTreeProject.Core;
 using FamilyTreeProject.DomainServices.Common;
 
 namespace FamilyTreeProject.DomainServices

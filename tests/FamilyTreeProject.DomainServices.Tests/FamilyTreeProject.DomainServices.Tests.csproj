@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FamilyTreeProject.DomainServices.Tests</RootNamespace>
     <AssemblyName>FamilyTreeProject.DomainServices.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -31,24 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FamilyTreeProject.Core">
-      <HintPath>..\..\..\FamilyTreeProject.Core\src\FamilyTreeProject.Core\bin\Debug\FamilyTreeProject.Core.dll</HintPath>
+    <Reference Include="Castle.Core, Version=4.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Users\Charles.Nurse\OneDrive\Visual Studio Projects\MyFamilyTreeProject\packages\Castle.Core.4.1.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Moq, Version=4.7.25.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Users\Charles.Nurse\OneDrive\Visual Studio Projects\MyFamilyTreeProject\packages\Moq.4.7.25\lib\net45\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Naif.Core, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Naif.Core.1.4.0\lib\Naif.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Naif.Data, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Naif.Data.1.5.0\lib\Naif.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="nunit.framework, Version=3.7.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Users\Charles.Nurse\OneDrive\Visual Studio Projects\MyFamilyTreeProject\packages\NUnit.3.7.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CitationServiceTests.cs" />
+    <Compile Include="EntityServiceBaseTests.cs" />
     <Compile Include="FactServiceTests.cs" />
     <Compile Include="FamilyServiceTests.cs" />
     <Compile Include="FamilyTreeServiceFactoryTests.cs" />
@@ -73,6 +64,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\FamilyTreeProject.Core\src\FamilyTreeProject.Core\FamilyTreeProject.Core.csproj">
+      <Project>{ba58d9f1-31a6-4bde-9396-0aba7ee082d9}</Project>
+      <Name>FamilyTreeProject.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\FamilyTreeProject.DomainServices\FamilyTreeProject.DomainServices.csproj">
       <Project>{2baa8950-fd2a-4cbb-b938-7db939d108ec}</Project>
       <Name>FamilyTreeProject.DomainServices</Name>
@@ -83,6 +78,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

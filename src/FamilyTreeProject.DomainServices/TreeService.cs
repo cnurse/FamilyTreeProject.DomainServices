@@ -9,17 +9,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Naif.Core.Caching;
-using Naif.Core.Collections;
-using Naif.Core.Contracts;
-using Naif.Data;
+using FamilyTreeProject.Collections;
+using FamilyTreeProject.Contracts;
+using FamilyTreeProject.Data;
 
 namespace FamilyTreeProject.DomainServices
 {
     public class TreeService : ITreeService
     {
-        private const string FormattedTreeCache = "FTP_Tree_{0}";
-
         private readonly IUnitOfWork _unitOfWork;
         private readonly IRepository<Tree> _repository;
 
@@ -35,7 +32,7 @@ namespace FamilyTreeProject.DomainServices
         }
 
         /// <summary>
-        ///   Adds a tree to the data store and sets the <see cref = "Tree.Id" /> property
+        ///   Adds a tree to the data store and sets the <see cref = "Tree.TreeId" /> property
         ///   of the <paramref name = "tree" /> to the id of the new tree.
         /// </summary>
         /// <param name = "tree">The tree to add to the data store.</param>
@@ -69,9 +66,9 @@ namespace FamilyTreeProject.DomainServices
         /// </summary>
         /// <param name = "treeId">The Id of the tree</param>
         /// <returns>A <see cref = "Tree" /></returns>
-        public Tree Get(int treeId)
+        public Tree Get(string treeId)
         {
-            Requires.NotNegative("treeId", treeId);
+            Requires.NotNullOrEmpty("treeId", treeId);
 
             return Get().SingleOrDefault(t => t.TreeId == treeId);
         }

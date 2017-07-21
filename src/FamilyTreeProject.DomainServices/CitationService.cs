@@ -6,8 +6,8 @@
 //                                         *
 // *****************************************
 
+using FamilyTreeProject.Data;
 using FamilyTreeProject.DomainServices.Common;
-using Naif.Data;
 
 namespace FamilyTreeProject.DomainServices
 {

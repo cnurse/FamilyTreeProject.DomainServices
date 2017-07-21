@@ -6,9 +6,8 @@
 //                                         *
 // *****************************************
 
-using Naif.Core.Caching;
-using Naif.Core.Contracts;
-using Naif.Data;
+using FamilyTreeProject.Contracts;
+using FamilyTreeProject.Data;
 
 namespace FamilyTreeProject.DomainServices
 {
@@ -24,10 +23,9 @@ namespace FamilyTreeProject.DomainServices
         private readonly ISourceService _sourceService;
         private readonly ITreeService _treeService;
 
-        public FamilyTreeServiceFactory(IUnitOfWork unitOfWork, ICacheProvider cache)
+        public FamilyTreeServiceFactory(IUnitOfWork unitOfWork)
         {
             Requires.NotNull(unitOfWork);
-            Requires.NotNull(cache);
 
             _citationService = new CitationService(unitOfWork);
             _familyService = new FamilyService(unitOfWork);
