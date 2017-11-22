@@ -1,13 +1,6 @@
-﻿//******************************************
-//  Copyright (C) 2014-2015 Charles Nurse  *
-//                                         *
-//  Licensed under MIT License             *
-//  (see included LICENSE)                 *
-//                                         *
-// *****************************************
-
-using System.Collections.Generic;
-using FamilyTreeProject.TestUtilities;
+﻿using System.Collections.Generic;
+using FamilyTreeProject.Core;
+using FamilyTreeProject.DomainServices.Tests.Common;
 using NUnit.Framework;
 
 namespace FamilyTreeProject.DomainServices.Tests

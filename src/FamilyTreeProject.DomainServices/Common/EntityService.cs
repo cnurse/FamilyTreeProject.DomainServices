@@ -9,10 +9,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FamilyTreeProject.Collections;
-using FamilyTreeProject.Common;
-using FamilyTreeProject.Contracts;
-using FamilyTreeProject.Data;
+using FamilyTreeProject.Core.Collections;
+using FamilyTreeProject.Core.Common;
+using FamilyTreeProject.Core.Contracts;
+using FamilyTreeProject.Core.Data;
 
 namespace FamilyTreeProject.DomainServices.Common
 {

@@ -1,14 +1,5 @@
-﻿//******************************************
-//  Copyright (C) 2014-2015 Charles Nurse  *
-//                                         *
-//  Licensed under MIT License             *
-//  (see included LICENSE)                 *
-//                                         *
-// *****************************************
-
-
-using System;
-using FamilyTreeProject.Data;
+﻿using System;
+using FamilyTreeProject.Core.Data;
 using Moq;
 using NUnit.Framework;
 

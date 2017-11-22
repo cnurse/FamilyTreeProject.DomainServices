@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using FamilyTreeProject.Collections;
-using FamilyTreeProject.Common;
-using FamilyTreeProject.Data;
+using FamilyTreeProject.Core.Collections;
+using FamilyTreeProject.Core.Common;
+using FamilyTreeProject.Core.Data;
 using FamilyTreeProject.DomainServices.Common;
-using FamilyTreeProject.TestUtilities;
+using FamilyTreeProject.DomainServices.Tests.Common;
 using Moq;
 using NUnit.Framework;
 // ReSharper disable UnusedVariable

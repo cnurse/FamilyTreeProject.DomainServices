@@ -1,17 +1,10 @@
-﻿//******************************************
-//  Copyright (C) 2014-2015 Charles Nurse  *
-//                                         *
-//  Licensed under MIT License             *
-//  (see included LICENSE)                 *
-//                                         *
-// *****************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FamilyTreeProject.Collections;
-using FamilyTreeProject.Contracts;
-using FamilyTreeProject.Data;
+using FamilyTreeProject.Core;
+using FamilyTreeProject.Core.Collections;
+using FamilyTreeProject.Core.Contracts;
+using FamilyTreeProject.Core.Data;
 
 namespace FamilyTreeProject.DomainServices
 {

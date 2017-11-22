@@ -1,13 +1,5 @@
-﻿//******************************************
-//  Copyright (C) 2014-2015 Charles Nurse  *
-//                                         *
-//  Licensed under MIT License             *
-//  (see included LICENSE)                 *
-//                                         *
-// *****************************************
-
-using FamilyTreeProject.Contracts;
-using FamilyTreeProject.Data;
+﻿using FamilyTreeProject.Core.Contracts;
+using FamilyTreeProject.Core.Data;
 
 namespace FamilyTreeProject.DomainServices
 {

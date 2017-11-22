@@ -1,18 +1,10 @@
-﻿//******************************************
-//  Copyright (C) 2014-2015 Charles Nurse  *
-//                                         *
-//  Licensed under MIT License             *
-//  (see included LICENSE)                 *
-//                                         *
-// *****************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FamilyTreeProject.Collections;
 using FamilyTreeProject.Core;
-using FamilyTreeProject.Data;
-using FamilyTreeProject.TestUtilities;
+using FamilyTreeProject.Core.Collections;
+using FamilyTreeProject.Core.Data;
+using FamilyTreeProject.DomainServices.Tests.Common;
 using Moq;
 using NUnit.Framework;
 

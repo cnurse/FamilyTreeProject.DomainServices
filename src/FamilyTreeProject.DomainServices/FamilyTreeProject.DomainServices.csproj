@@ -1,25 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\FamilyTreeProject.Core\src\FamilyTreeProject.Core\FamilyTreeProject.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\CommonErrors.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CommonErrors.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\CommonErrors.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CommonErrors.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>

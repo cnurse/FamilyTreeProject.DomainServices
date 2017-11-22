@@ -8,8 +8,8 @@
 
 using System;
 using System.Collections.Generic;
-using FamilyTreeProject.Collections;
-using FamilyTreeProject.Common;
+using FamilyTreeProject.Core.Collections;
+using FamilyTreeProject.Core.Common;
 
 namespace FamilyTreeProject.DomainServices.Common
 {
