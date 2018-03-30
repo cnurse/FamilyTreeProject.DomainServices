@@ -5,74 +5,68 @@ namespace FamilyTreeProject.DomainServices
 {
     public class FamilyTreeServiceFactory : IFamilyTreeServiceFactory
     {
-        private readonly ICitationService _citationService;
-        private readonly IFactService _factService;
-        private readonly IFamilyService _familyService;
-        private readonly IIndividualService _individualService;
-        private readonly IMultimediaLinkService _multimediaService;
-        private readonly INoteService _noteService;
-        private readonly IRepositoryService _repositoryService;
-        private readonly ISourceService _sourceService;
-        private readonly ITreeService _treeService;
+        private ICitationService _citationService;
+        private IFactService _factService;
+        private IFamilyService _familyService;
+        private IIndividualService _individualService;
+        private IMultimediaLinkService _multimediaService;
+        private INoteService _noteService;
+        private IRepositoryService _repositoryService;
+        private ISourceService _sourceService;
+        private ITreeService _treeService;
+
+        private readonly IUnitOfWork _unitOfWork;
 
         public FamilyTreeServiceFactory(IUnitOfWork unitOfWork)
         {
             Requires.NotNull(unitOfWork);
 
-            _citationService = new CitationService(unitOfWork);
-            _familyService = new FamilyService(unitOfWork);
-            _individualService = new IndividualService(unitOfWork);
-            _factService = new FactService(unitOfWork);
-            _multimediaService = new MultimediaLinkService(unitOfWork);
-            _noteService = new NoteService(unitOfWork);
-            _repositoryService = new RepositoryService(unitOfWork);
-            _sourceService = new SourceService(unitOfWork);
-            _treeService = new TreeService(unitOfWork);
+            _unitOfWork = unitOfWork;
         }
 
         public ICitationService CreateCitationService()
         {
-            return _citationService;
+            return _citationService ?? (_citationService = new CitationService(_unitOfWork));
         }
 
         public IFactService CreateFactService()
         {
-            return _factService;
+            return _factService ?? (_factService = new FactService(_unitOfWork));
         }
 
         public IFamilyService CreateFamilyService()
         {
-            return _familyService;
+            return _familyService ?? (_familyService = new FamilyService(_unitOfWork));
         }
 
         public IIndividualService CreateIndividualService()
         {
-            return _individualService;
+            return _individualService ?? (_individualService = new IndividualService(_unitOfWork));
         }
 
         public IMultimediaLinkService CreateMultimediaService()
         {
-            return _multimediaService;
+            return _multimediaService ?? ( _multimediaService = new MultimediaLinkService(_unitOfWork));
         }
 
         public INoteService CreateNoteService()
         {
-            return _noteService;
+            return _noteService ?? (_noteService = new NoteService(_unitOfWork));
         }
 
         public IRepositoryService CreateRepositoryService()
         {
-            return _repositoryService;
+            return _repositoryService ?? (_repositoryService = new RepositoryService(_unitOfWork));
         }
 
         public ISourceService CreateSourceService()
         {
-            return _sourceService;
+            return _sourceService ?? (_sourceService = new SourceService(_unitOfWork));
         }
 
         public ITreeService CreateTreeService()
         {
-            return _treeService;
+            return _treeService ?? (_treeService = new TreeService(_unitOfWork));
         }
     }
 }
