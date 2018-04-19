@@ -17,7 +17,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             {
                 repositories.Add(new Repository
                 {
-                    Id = i.ToString(),
+                    Id = i,
                     Name = String.Format(TestConstants.REP_Name, i),
                     Address = String.Format(TestConstants.REP_Address, i),
                     TreeId = TestConstants.TREE_Id

@@ -28,7 +28,7 @@ namespace FamilyTreeProject.DomainServices
         /// </summary>
         /// <param name = "treeId">The Id of the tree</param>
         /// <returns>A <see cref = "Tree" /></returns>
-        Tree Get(string treeId);
+        Tree Get(int treeId);
 
         /// <summary>
         /// Retrieves all the trees

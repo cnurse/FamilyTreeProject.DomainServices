@@ -8,7 +8,7 @@ namespace FamilyTreeProject.DomainServices
     /// The FamilyService provides a Facade to the Families store,
     /// allowing for additional business logic to be applied.
     /// </summary>
-    public class FamilyService : EntityService<Family>, IFamilyService
+    public class FamilyService : AncestorEntityService<Family>, IFamilyService
     {
         /// <summary>
         /// Constructs a Family Service that will use the specified

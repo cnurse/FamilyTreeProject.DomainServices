@@ -17,7 +17,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             {
                 facts.Add(new Fact
                 {
-                    Id = i.ToString(),
+                    Id = i,
                     Date = String.Format(TestConstants.EVN_Date, i),
                     Place = String.Format(TestConstants.EVN_Place, i),
                     TreeId = TestConstants.TREE_Id

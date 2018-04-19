@@ -134,7 +134,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _service = CreateService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<ArgumentException>(() => _service.Get(It.IsAny<string>(), string.Empty));
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(It.IsAny<int>(), -1));
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _service = CreateService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<ArgumentException>(() => _service.Get(string.Empty, It.IsAny<string>()));
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1, It.IsAny<int>()));
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             var mockRepository = SetUpRepository(_mockUnitOfWork);
 
             _service = CreateService(_mockUnitOfWork.Object);
-            const string id = TestConstants.ID_Exists;
+            const int id = TestConstants.ID_Exists;
 
             //Act
             _service.Get(id, TestConstants.TREE_Id);
@@ -170,7 +170,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             var mockRepository = SetUpRepository(_mockUnitOfWork, GetEntities, TestConstants.PAGE_TotalCount);
 
             _service = CreateService(_mockUnitOfWork.Object);
-            const string id = TestConstants.ID_Exists;
+            const int id = TestConstants.ID_Exists;
 
             //Act
             var individual = _service.Get(id, TestConstants.TREE_Id);
@@ -186,7 +186,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             var mockRepository = SetUpRepository(_mockUnitOfWork, GetEntities, TestConstants.PAGE_NotFound);
 
             _service = CreateService(_mockUnitOfWork.Object);
-            const string id = TestConstants.ID_NotFound;
+            const int id = TestConstants.ID_NotFound;
 
             //Act
             var individual = _service.Get(id, TestConstants.TREE_Id);
@@ -202,7 +202,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _service = CreateService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<ArgumentException>(() => _service.Get(String.Empty));
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1));
         }
 
         [Test]
@@ -212,7 +212,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             var mockRepository = SetUpRepository(_mockUnitOfWork);
 
             _service = CreateService(_mockUnitOfWork.Object);
-            const string treeId = TestConstants.TREE_Id;
+            const int treeId = TestConstants.TREE_Id;
 
             //Act
             _service.Get(treeId);
@@ -228,7 +228,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             var mockRepository = SetUpRepository(_mockUnitOfWork, GetEntities, TestConstants.PAGE_TotalCount);
 
             _service = CreateService(_mockUnitOfWork.Object);
-            const string treeId = TestConstants.TREE_Id;
+            const int treeId = TestConstants.TREE_Id;
 
             //Act
             var sources = _service.Get(treeId);
@@ -245,7 +245,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _service = CreateService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<ArgumentException>(() => _service.Get(string.Empty, t => true, 0, TestConstants.PAGE_RecordCount));
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1, t => true, 0, TestConstants.PAGE_RecordCount));
         }
 
         [Test]
@@ -255,7 +255,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             var mockRepository = SetUpRepository(_mockUnitOfWork);
 
             _service = CreateService(_mockUnitOfWork.Object);
-            const string treeId = TestConstants.TREE_Id;
+            const int treeId = TestConstants.TREE_Id;
 
             //Act
             _service.Get(treeId, t => true, 0, TestConstants.PAGE_RecordCount);
@@ -271,7 +271,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             var mockRepository = SetUpRepository(_mockUnitOfWork, GetEntities, TestConstants.PAGE_TotalCount);
 
             _service = CreateService(_mockUnitOfWork.Object);
-            const string treeId = TestConstants.TREE_Id;
+            const int treeId = TestConstants.TREE_Id;
 
             //Act
             var sources = _service.Get(treeId, t => true, 0, TestConstants.PAGE_RecordCount);
@@ -329,7 +329,6 @@ namespace FamilyTreeProject.DomainServices.Tests
             //Assert
             _mockUnitOfWork.Verify(db => db.Commit());
         }
-
 
 
         protected TService CreateService(IUnitOfWork unitOfWork)

@@ -17,7 +17,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             {
                 citations.Add(new Citation
                 {
-                    Id = i.ToString(),
+                    Id = i,
                     Text = String.Format(TestConstants.CIT_Text, i),
                     Page = String.Format(TestConstants.CIT_Page, i),
                     TreeId = TestConstants.TREE_Id

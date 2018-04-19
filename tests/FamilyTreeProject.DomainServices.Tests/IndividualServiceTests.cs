@@ -17,12 +17,12 @@ namespace FamilyTreeProject.DomainServices.Tests
             {
                 individuals.Add(new Individual
                 {
-                    Id = i.ToString(),
+                    Id = i,
                     FirstName = String.Format(TestConstants.IND_FirstName, i),
                     LastName = (i <= TestConstants.IND_LastNameCount) ? TestConstants.IND_LastName : TestConstants.IND_AltLastName,
                     TreeId = TestConstants.TREE_Id,
-                    FatherId = (i < 5 && i > 2) ? TestConstants.ID_FatherId : string.Empty,
-                    MotherId = (i < 5 && i > 2) ? TestConstants.ID_MotherId : string.Empty
+                    FatherId = (i < 5 && i > 2) ? TestConstants.ID_FatherId : -1,
+                    MotherId = (i < 5 && i > 2) ? TestConstants.ID_MotherId : -1
                 });
             }
 

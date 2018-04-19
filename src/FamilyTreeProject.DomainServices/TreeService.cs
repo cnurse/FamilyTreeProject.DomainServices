@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FamilyTreeProject.Core;
 using FamilyTreeProject.Core.Collections;
+using FamilyTreeProject.Core.Common;
 using FamilyTreeProject.Core.Contracts;
 using FamilyTreeProject.Core.Data;
 
@@ -25,7 +26,7 @@ namespace FamilyTreeProject.DomainServices
         }
 
         /// <summary>
-        ///   Adds a tree to the data store and sets the <see cref = "Tree.TreeId" /> property
+        ///   Adds a tree to the data store and sets the <see cref = "Tree.Id" /> property
         ///   of the <paramref name = "tree" /> to the id of the new tree.
         /// </summary>
         /// <param name = "tree">The tree to add to the data store.</param>
@@ -34,6 +35,11 @@ namespace FamilyTreeProject.DomainServices
             //Contract
             Requires.NotNull(tree);
 
+            if (string.IsNullOrEmpty(tree.UniqueId))
+            {
+                tree.UniqueId = Guid.NewGuid().ToString();
+            }
+            
             _repository.Add(tree);
             _unitOfWork.Commit();
         }
@@ -57,13 +63,13 @@ namespace FamilyTreeProject.DomainServices
         /// <summary>
         /// Retrieves a single tree
         /// </summary>
-        /// <param name = "treeId">The Id of the tree</param>
+        /// <param name = "id">The Id of the tree</param>
         /// <returns>A <see cref = "Tree" /></returns>
-        public Tree Get(string treeId)
+        public Tree Get(int id)
         {
-            Requires.NotNullOrEmpty("treeId", treeId);
+            Requires.NotNegative("id", id);
 
-            return Get().SingleOrDefault(t => t.TreeId == treeId);
+            return Get().SingleOrDefault(t => t.Id == id);
         }
 
         /// <summary>

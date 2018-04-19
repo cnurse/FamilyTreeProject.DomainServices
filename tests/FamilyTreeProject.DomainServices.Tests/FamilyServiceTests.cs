@@ -16,9 +16,9 @@ namespace FamilyTreeProject.DomainServices.Tests
             {
                 familys.Add(new Family
                 {
-                    Id = i.ToString(),
-                    WifeId = (i < 5 && i > 2) ? TestConstants.ID_WifeId : string.Empty,
-                    HusbandId = (i < 5 && i > 2) ? TestConstants.ID_HusbandId : string.Empty,
+                    Id = i,
+                    WifeId = (i < 5 && i > 2) ? TestConstants.ID_WifeId : -1,
+                    HusbandId = (i < 5 && i > 2) ? TestConstants.ID_HusbandId : -1,
                     TreeId = TestConstants.TREE_Id
                 });
             }

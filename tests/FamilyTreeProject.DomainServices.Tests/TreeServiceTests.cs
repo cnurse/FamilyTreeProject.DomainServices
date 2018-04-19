@@ -152,7 +152,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _service = new TreeService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<ArgumentException>(() => _service.Get(string.Empty));
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1));
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             _service = new TreeService(_mockUnitOfWork.Object);
-            const string id = TestConstants.ID_Exists;
+            const int id = TestConstants.ID_Exists;
 
             //Act
             _service.Get(id);
@@ -182,7 +182,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             _service = new TreeService(_mockUnitOfWork.Object);
-            const string id = TestConstants.ID_Exists;
+            const int id = TestConstants.ID_Exists;
 
             //Act
             Tree tree = _service.Get(id);
@@ -200,7 +200,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _mockUnitOfWork.Setup(d => d.GetRepository<Tree>()).Returns(mockRepository.Object);
 
             _service = new TreeService(_mockUnitOfWork.Object);
-            const string id = TestConstants.ID_NotFound;
+            const int id = TestConstants.ID_NotFound;
 
             //Act
             var tree = _service.Get(id);
@@ -343,7 +343,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             {
                 trees.Add(new Tree
                                 {
-                                    TreeId = i.ToString(),
+                                    Id = i,
                                     Name = "Foo"
                                 });
             }

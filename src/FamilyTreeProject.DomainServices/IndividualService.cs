@@ -8,7 +8,7 @@ namespace FamilyTreeProject.DomainServices
     ///   The IndividualService provides a Facade to the Individuals store,
     ///   allowing for additional business logic to be applied.
     /// </summary>
-    public class IndividualService : EntityService<Individual> , IIndividualService
+    public class IndividualService : AncestorEntityService<Individual> , IIndividualService
     {
         /// <summary>
         /// Constructs an Individuals Service to manage Individuals

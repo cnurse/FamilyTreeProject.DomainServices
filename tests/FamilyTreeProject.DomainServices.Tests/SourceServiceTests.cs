@@ -18,7 +18,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             {
                 sources.Add(new Source
                 {
-                    Id = i.ToString(),
+                    Id = i,
                     Author = String.Format(TestConstants.SRC_Author, i),
                     Title = String.Format(TestConstants.SRC_Title, i),
                     TreeId = TestConstants.TREE_Id

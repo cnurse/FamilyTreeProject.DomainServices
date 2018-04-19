@@ -18,7 +18,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             {
                 multimediaLinks.Add(new MultimediaLink
                 {
-                    Id = i.ToString(),
+                    Id = i,
                     File = "Foo",
                     TreeId = TestConstants.TREE_Id,
                 });
