@@ -1,12 +1,4 @@
-﻿//******************************************
-//  Copyright (C) 2014-2015 Charles Nurse  *
-//                                         *
-//  Licensed under MIT License             *
-//  (see included LICENSE)                 *
-//                                         *
-// *****************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using FamilyTreeProject.Core;
@@ -61,7 +53,7 @@ namespace FamilyTreeProject.DomainServices.Common
             Repository.Add(entity);
             UnitOfWork.Commit();
 
-            //if repository does not support aggregates then add the notes
+            //if repository does not support aggregates then add the notes and multimedia
             if (!Repository.SupportsAggregates)
             {
                 AddNotes(entity.Notes, entity);

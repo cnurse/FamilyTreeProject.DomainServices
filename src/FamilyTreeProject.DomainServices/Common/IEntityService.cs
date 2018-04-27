@@ -1,12 +1,4 @@
-﻿//******************************************
-//  Copyright (C) 2014-2015 Charles Nurse  *
-//                                         *
-//  Licensed under MIT License             *
-//  (see included LICENSE)                 *
-//                                         *
-// *****************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using FamilyTreeProject.Core.Collections;
 using FamilyTreeProject.Core.Common;
