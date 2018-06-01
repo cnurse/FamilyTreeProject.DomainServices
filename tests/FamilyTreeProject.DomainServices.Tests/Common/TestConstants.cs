@@ -6,6 +6,8 @@
 
 // ReSharper disable InconsistentNaming
 
+using System;
+
 namespace FamilyTreeProject.DomainServices.Tests.Common
 {
     public static class TestConstants
@@ -40,6 +42,6 @@ namespace FamilyTreeProject.DomainServices.Tests.Common
         public const int PAGE_RecordCount = 5;
         public const int PAGE_TotalCount = 22;
 
-        public const int TREE_Id = 1;
+        public static readonly string TREE_Id = Guid.Empty.ToString();
     }
 }

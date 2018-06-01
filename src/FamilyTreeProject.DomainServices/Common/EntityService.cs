@@ -24,8 +24,11 @@ namespace FamilyTreeProject.DomainServices.Common
 
             UnitOfWork = unitOfWork;
             Repository = UnitOfWork.GetRepository<TEntity>();
-            NoteRepository = UnitOfWork.GetRepository<Note>();
-            MultimediaRepository = UnitOfWork.GetRepository<MultimediaLink>();
+            if (!Repository.SupportsAggregates)
+            {
+                NoteRepository = UnitOfWork.GetRepository<Note>();
+                MultimediaRepository = UnitOfWork.GetRepository<MultimediaLink>();
+            }
         }
 
         protected IRepository<TEntity> Repository { get; private set; }
@@ -106,7 +109,7 @@ namespace FamilyTreeProject.DomainServices.Common
         /// <param name = "id">The Id of the entity to retrieve</param>
         /// <param name = "treeId">The Id of the Tree</param>
         /// <returns>A <see cref = "TEntity" /></returns>
-        public virtual TEntity Get(int id, int treeId)
+        public virtual TEntity Get(int id, string treeId)
         {
             Requires.NotNegative("id", id);
 
@@ -118,10 +121,10 @@ namespace FamilyTreeProject.DomainServices.Common
         /// </summary>
         /// <param name = "treeId">The Id of the Tree</param>
         /// <returns>A collection of <see cref = "TEntity" /> objects</returns>
-        public virtual IEnumerable<TEntity> Get(int treeId)
+        public virtual IEnumerable<TEntity> Get(string treeId)
         {
             //Contract
-            Requires.NotNegative("treeId", treeId);
+            Requires.NotNullOrEmpty("treeId", treeId);
 
             return Repository.Find(t => t.TreeId == treeId);
         }
@@ -133,7 +136,7 @@ namespace FamilyTreeProject.DomainServices.Common
         /// <param name="predicate">The predicate to use</param>
         /// <returns>List of entities</returns>
 
-        public IEnumerable<TEntity> Get(int treeId, Func<TEntity, bool> predicate)
+        public IEnumerable<TEntity> Get(string treeId, Func<TEntity, bool> predicate)
         {
             return Get(treeId).Where(predicate);
         }
@@ -146,7 +149,7 @@ namespace FamilyTreeProject.DomainServices.Common
         /// <param name="pageIndex">The page index to return</param>
         /// <param name="pageSize">The page size</param>
         /// <returns>List of entities</returns>
-        public virtual IPagedList<TEntity> Get(int treeId, Func<TEntity, bool> predicate, int pageIndex, int pageSize)
+        public virtual IPagedList<TEntity> Get(string treeId, Func<TEntity, bool> predicate, int pageIndex, int pageSize)
         {
             return new PagedList<TEntity>(Get(treeId).Where(predicate), pageIndex, pageSize);
         }

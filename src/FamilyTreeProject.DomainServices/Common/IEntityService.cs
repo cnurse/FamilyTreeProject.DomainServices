@@ -29,14 +29,14 @@ namespace FamilyTreeProject.DomainServices.Common
         /// <param name = "id">The Id of the entity to retrieve</param>
         /// <param name = "treeId">The Id of the Tree</param>
         /// <returns>A <see cref = "TEntity" /></returns>
-        TEntity Get(int id, int treeId);
+        TEntity Get(int id, string treeId);
 
         /// <summary>
         /// Retrieves all the entities of this type for a Tree
         /// </summary>
         /// <param name = "treeId">The Id of the Tree</param>
         /// <returns>A collection of <see cref = "TEntity" /> objects</returns>
-        IEnumerable<TEntity> Get(int treeId);
+        IEnumerable<TEntity> Get(string treeId);
 
         /// <summary>
         /// Gets a list of entities based on a predicate
@@ -44,7 +44,7 @@ namespace FamilyTreeProject.DomainServices.Common
         /// <param name="treeId">The Id of the tree</param>
         /// <param name="predicate">The predicate to use</param>
         /// <returns>List of entities</returns>
-        IEnumerable<TEntity> Get(int treeId, Func<TEntity, bool> predicate);
+        IEnumerable<TEntity> Get(string treeId, Func<TEntity, bool> predicate);
 
         /// <summary>
         /// Gets a page of entities based on a predicate
@@ -54,7 +54,7 @@ namespace FamilyTreeProject.DomainServices.Common
         /// <param name="pageIndex">The page index to return</param>
         /// <param name="pageSize">The page size</param>
         /// <returns>List of entities</returns>
-        IPagedList<TEntity> Get(int treeId, Func<TEntity, bool> predicate, int pageIndex, int pageSize);
+        IPagedList<TEntity> Get(string treeId, Func<TEntity, bool> predicate, int pageIndex, int pageSize);
 
         /// <summary>
         /// Updates an entity in the data store.

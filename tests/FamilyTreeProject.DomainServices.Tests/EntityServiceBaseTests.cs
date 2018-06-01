@@ -134,7 +134,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _service = CreateService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(It.IsAny<int>(), -1));
+            Assert.Throws<ArgumentException>(() => _service.Get(It.IsAny<int>(), String.Empty));
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _service = CreateService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1, It.IsAny<int>()));
+            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1, It.IsAny<string>()));
         }
 
         [Test]
@@ -202,7 +202,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _service = CreateService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1));
+            Assert.Throws<ArgumentException>(() => _service.Get(String.Empty));
         }
 
         [Test]
@@ -212,7 +212,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             var mockRepository = SetUpRepository(_mockUnitOfWork);
 
             _service = CreateService(_mockUnitOfWork.Object);
-            const int treeId = TestConstants.TREE_Id;
+            string treeId = TestConstants.TREE_Id;
 
             //Act
             _service.Get(treeId);
@@ -228,7 +228,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             var mockRepository = SetUpRepository(_mockUnitOfWork, GetEntities, TestConstants.PAGE_TotalCount);
 
             _service = CreateService(_mockUnitOfWork.Object);
-            const int treeId = TestConstants.TREE_Id;
+            string treeId = TestConstants.TREE_Id;
 
             //Act
             var sources = _service.Get(treeId);
@@ -245,7 +245,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             _service = CreateService(_mockUnitOfWork.Object);
 
             //Assert
-            Assert.Throws<IndexOutOfRangeException>(() => _service.Get(-1, t => true, 0, TestConstants.PAGE_RecordCount));
+            Assert.Throws<ArgumentException>(() => _service.Get(String.Empty, t => true, 0, TestConstants.PAGE_RecordCount));
         }
 
         [Test]
@@ -255,7 +255,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             var mockRepository = SetUpRepository(_mockUnitOfWork);
 
             _service = CreateService(_mockUnitOfWork.Object);
-            const int treeId = TestConstants.TREE_Id;
+            string treeId = TestConstants.TREE_Id;
 
             //Act
             _service.Get(treeId, t => true, 0, TestConstants.PAGE_RecordCount);
@@ -271,7 +271,7 @@ namespace FamilyTreeProject.DomainServices.Tests
             var mockRepository = SetUpRepository(_mockUnitOfWork, GetEntities, TestConstants.PAGE_TotalCount);
 
             _service = CreateService(_mockUnitOfWork.Object);
-            const int treeId = TestConstants.TREE_Id;
+            string treeId = TestConstants.TREE_Id;
 
             //Act
             var sources = _service.Get(treeId, t => true, 0, TestConstants.PAGE_RecordCount);
