@@ -13,10 +13,10 @@ namespace FamilyTreeProject.DomainServices.Tests.Common
     public static class TestConstants
     {
         public const int ID_Exists = 1;
-        public const int ID_FatherId = 1;
-        public const int ID_MotherId = 2;
-        public const int ID_WifeId = 3;
-        public const int ID_HusbandId = 4;
+        public const string ID_FatherId = "1";
+        public const string ID_MotherId = "2";
+        public const string ID_WifeId = "3";
+        public const string ID_HusbandId = "4";
         public const int ID_NotFound = 999;
 
         public const string IND_FirstName = "Foo{0}";

@@ -12,8 +12,11 @@ namespace FamilyTreeProject.DomainServices.Common
         
         protected AncestorEntityService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _citationRepository = UnitOfWork.GetRepository<Citation>();
-            _factRepository = UnitOfWork.GetRepository<Fact>();
+            if (!Repository.SupportsAggregates)
+            {
+                _citationRepository = UnitOfWork.GetRepository<Citation>();
+                _factRepository = UnitOfWork.GetRepository<Fact>();
+            }
         }
         
         public override void Add(TAncestorEntity ancestorEntity)

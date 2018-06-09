@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FamilyTreeProject.Core;
 using FamilyTreeProject.DomainServices.Tests.Common;
 using NUnit.Framework;
@@ -17,8 +18,8 @@ namespace FamilyTreeProject.DomainServices.Tests
                 familys.Add(new Family
                 {
                     Id = i,
-                    WifeId = (i < 5 && i > 2) ? TestConstants.ID_WifeId : -1,
-                    HusbandId = (i < 5 && i > 2) ? TestConstants.ID_HusbandId : -1,
+                    WifeId = (i < 5 && i > 2) ? TestConstants.ID_WifeId : String.Empty,
+                    HusbandId = (i < 5 && i > 2) ? TestConstants.ID_HusbandId : String.Empty,
                     TreeId = TestConstants.TREE_Id
                 });
             }
