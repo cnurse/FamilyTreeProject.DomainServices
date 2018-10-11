@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FamilyTreeProject.Core;
 using FamilyTreeProject.Core.Collections;
-using FamilyTreeProject.Core.Common;
 using FamilyTreeProject.Core.Contracts;
 using FamilyTreeProject.Core.Data;
 

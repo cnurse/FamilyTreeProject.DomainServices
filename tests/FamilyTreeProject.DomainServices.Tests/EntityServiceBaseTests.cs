@@ -22,6 +22,9 @@ namespace FamilyTreeProject.DomainServices.Tests
         public void SetUp()
         {
             _mockUnitOfWork = new Mock<IUnitOfWork>();
+            var repository = new Mock<IRepository<TEntity>>();
+            repository.Setup(r => r.SupportsAggregates).Returns(true);
+            _mockUnitOfWork.Setup(u => u.GetRepository<TEntity>()).Returns(repository.Object);
         }
 
         [Test]

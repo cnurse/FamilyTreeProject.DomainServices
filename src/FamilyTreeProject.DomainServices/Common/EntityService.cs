@@ -14,8 +14,8 @@ namespace FamilyTreeProject.DomainServices.Common
     /// </summary>
     public abstract class EntityService<TEntity> : IEntityService<TEntity> where TEntity : Entity
     {
-        private readonly IRepository<MultimediaLink> MultimediaRepository;
-        private readonly IRepository<Note> NoteRepository;
+        private readonly IRepository<MultimediaLink> _multimediaRepository;
+        private readonly IRepository<Note> _noteRepository;
 
         protected EntityService(IUnitOfWork unitOfWork)
         {
@@ -26,8 +26,8 @@ namespace FamilyTreeProject.DomainServices.Common
             Repository = UnitOfWork.GetRepository<TEntity>();
             if (!Repository.SupportsAggregates)
             {
-                NoteRepository = UnitOfWork.GetRepository<Note>();
-                MultimediaRepository = UnitOfWork.GetRepository<MultimediaLink>();
+                _noteRepository = UnitOfWork.GetRepository<Note>();
+                _multimediaRepository = UnitOfWork.GetRepository<MultimediaLink>();
             }
         }
 
@@ -59,6 +59,7 @@ namespace FamilyTreeProject.DomainServices.Common
             //if repository does not support aggregates then add the notes and multimedia
             if (!Repository.SupportsAggregates)
             {
+                // ReSharper disable once PossibleNullReferenceException
                 AddNotes(entity.Notes, entity);
                 
                 AddMultimedia(entity.Multimedia, entity);
@@ -67,23 +68,25 @@ namespace FamilyTreeProject.DomainServices.Common
             }
         }
 
-        protected void AddMultimedia(IList<MultimediaLink> multimediaLinks,TEntity entity)
+        protected void AddMultimedia(IList<MultimediaLink> multimediaLinks,Entity entity)
         {
             foreach (var multimedia in multimediaLinks)
             {
-                multimedia.OwnerId = entity.Id;
+                multimedia.OwnerId = entity.UniqueId;
                 multimedia.TreeId = entity.TreeId;
-                MultimediaRepository.Add(multimedia);
+                multimedia.OwnerType = entity.EntityType;
+                _multimediaRepository.Add(multimedia);
             }
         }
 
-        protected void AddNotes(IList<Note> notes,TEntity entity)
+        protected void AddNotes(IList<Note> notes,Entity entity)
         {
             foreach (var note in notes)
             {
-                note.OwnerId = entity.Id;
+                note.OwnerId = entity.UniqueId;
+                note.OwnerType = entity.EntityType;
                 note.TreeId = entity.TreeId;
-                NoteRepository.Add(note);
+                _noteRepository.Add(note);
             }
         }
 

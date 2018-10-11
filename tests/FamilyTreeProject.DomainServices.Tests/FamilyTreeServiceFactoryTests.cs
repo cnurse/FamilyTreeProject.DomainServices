@@ -1,4 +1,5 @@
 ﻿using System;
+using FamilyTreeProject.Core;
 using FamilyTreeProject.Core.Data;
 using Moq;
 using NUnit.Framework;
@@ -31,7 +32,10 @@ namespace FamilyTreeProject.DomainServices.Tests
         public void CreateFamilyService_Returns_FamilyService()
         {
             //Arrange
-            _serviceFactory = new FamilyTreeServiceFactory(_mockUnitOfWork.Object);
+            var repository = new Mock<IRepository<Family>>();
+            repository.Setup(r => r.SupportsAggregates).Returns(true);
+            _mockUnitOfWork.Setup(u => u.GetRepository<Family>()).Returns(repository.Object);
+           _serviceFactory = new FamilyTreeServiceFactory(_mockUnitOfWork.Object);
 
             //Act
             var service = _serviceFactory.CreateFamilyService();
@@ -44,6 +48,9 @@ namespace FamilyTreeProject.DomainServices.Tests
         public void CreateIndividualService_Returns_IndividualService()
         {
             //Arrange
+            var repository = new Mock<IRepository<Individual>>();
+            repository.Setup(r => r.SupportsAggregates).Returns(true);
+            _mockUnitOfWork.Setup(u => u.GetRepository<Individual>()).Returns(repository.Object);
             _serviceFactory = new FamilyTreeServiceFactory(_mockUnitOfWork.Object);
 
             //Act
@@ -57,13 +64,16 @@ namespace FamilyTreeProject.DomainServices.Tests
         public void CreateTreeService_Returns_TreeService()
         {
             //Arrange
+            var repository = new Mock<IRepository<Tree>>();
+            repository.Setup(r => r.SupportsAggregates).Returns(true);
+            _mockUnitOfWork.Setup(u => u.GetRepository<Tree>()).Returns(repository.Object);
             _serviceFactory = new FamilyTreeServiceFactory(_mockUnitOfWork.Object);
 
             //Act
-            var service = _serviceFactory.CreateIndividualService();
+            var service = _serviceFactory.CreateTreeService();
 
             //Assert
-            Assert.IsInstanceOf<IndividualService>(service);
+            Assert.IsInstanceOf<TreeService>(service);
         }
     }
 }
