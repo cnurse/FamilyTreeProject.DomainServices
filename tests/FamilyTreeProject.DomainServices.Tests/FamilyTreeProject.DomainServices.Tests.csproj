@@ -10,7 +10,6 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FamilyTreeProject.Core\src\FamilyTreeProject.Core\FamilyTreeProject.Core.csproj" />
     <ProjectReference Include="..\..\src\FamilyTreeProject.DomainServices\FamilyTreeProject.DomainServices.csproj" />
   </ItemGroup>
 </Project>
