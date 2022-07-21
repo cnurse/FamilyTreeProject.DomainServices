@@ -1,8 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <PackageVersion>1.0.0-alpha-01</PackageVersion>
+    <LangVersion>latestmajor</LangVersion>
+    <RepositoryUrl>https://github.com/cnurse/FamilyTreeProject.DomainServices</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FamilyTreeProject.Core" Version="1.0.1" />
+    <PackageReference Include="FamilyTreeProject.Common" Version="1.1.0-alpha-01" />
+    <PackageReference Include="FamilyTreeProject.Core" Version="1.1.0-alpha-1" />
+    <PackageReference Include="Naif.Core" Version="3.3.3-alpha-01" />
   </ItemGroup>
 </Project>

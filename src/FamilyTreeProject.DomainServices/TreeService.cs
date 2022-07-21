@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FamilyTreeProject.Common.Data;
 using FamilyTreeProject.Core;
-using FamilyTreeProject.Core.Collections;
-using FamilyTreeProject.Core.Contracts;
-using FamilyTreeProject.Core.Data;
+using Naif.Core.Collections;
+using Naif.Core.Contracts;
 
 namespace FamilyTreeProject.DomainServices
 {

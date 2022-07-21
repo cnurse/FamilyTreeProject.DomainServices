@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using FamilyTreeProject.Common.Data;
 using FamilyTreeProject.Core;
 using FamilyTreeProject.Core.Common;
-using FamilyTreeProject.Core.Data;
 
 namespace FamilyTreeProject.DomainServices.Common
 {

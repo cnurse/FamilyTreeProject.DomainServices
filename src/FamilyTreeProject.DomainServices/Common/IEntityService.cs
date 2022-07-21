@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using FamilyTreeProject.Core.Collections;
 using FamilyTreeProject.Core.Common;
+using Naif.Core.Collections;
 
 namespace FamilyTreeProject.DomainServices.Common
 {

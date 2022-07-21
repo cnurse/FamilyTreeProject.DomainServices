@@ -1,5 +1,5 @@
-﻿using FamilyTreeProject.Core.Contracts;
-using FamilyTreeProject.Core.Data;
+﻿using FamilyTreeProject.Common.Data;
+using Naif.Core.Contracts;
 
 namespace FamilyTreeProject.DomainServices
 {

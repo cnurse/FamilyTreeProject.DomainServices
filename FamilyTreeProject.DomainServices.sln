@@ -9,11 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		azure-pipelines.yaml = azure-pipelines.yaml
 		LICENSE = LICENSE
 		README.md = README.md
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTreeProject.DomainServices", "src\FamilyTreeProject.DomainServices\FamilyTreeProject.DomainServices.csproj", "{2BAA8950-FD2A-4CBB-B938-7DB939D108EC}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F2C7462D-E36A-41D7-8D11-FECB25F18967}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTreeProject.DomainServices.Tests", "tests\FamilyTreeProject.DomainServices.Tests\FamilyTreeProject.DomainServices.Tests.csproj", "{BE1CBE2E-9DFA-40D3-AE3F-4CC2E6756638}"
 EndProject
@@ -36,7 +35,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{BE1CBE2E-9DFA-40D3-AE3F-4CC2E6756638} = {F2C7462D-E36A-41D7-8D11-FECB25F18967}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {69702B56-A3DC-4DDC-9810-D67EC6DF4C5D}

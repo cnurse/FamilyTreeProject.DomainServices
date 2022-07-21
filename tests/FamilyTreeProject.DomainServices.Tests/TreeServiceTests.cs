@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FamilyTreeProject.Common.Data;
 using FamilyTreeProject.Core;
-using FamilyTreeProject.Core.Collections;
-using FamilyTreeProject.Core.Data;
 using FamilyTreeProject.DomainServices.Tests.Common;
 using Moq;
+using Naif.Core.Collections;
 using NUnit.Framework;
 
 // ReSharper disable ObjectCreationAsStatement

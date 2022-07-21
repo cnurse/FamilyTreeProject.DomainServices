@@ -1,5 +1,5 @@
+using FamilyTreeProject.Common.Data;
 using FamilyTreeProject.Core;
-using FamilyTreeProject.Core.Data;
 using FamilyTreeProject.DomainServices.Common;
 
 namespace FamilyTreeProject.DomainServices
