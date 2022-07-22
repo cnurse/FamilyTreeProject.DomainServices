@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FamilyTreeProject.Core;
+using FamilyTreeProject.Common.Models;
 using Naif.Core.Collections;
 
 namespace FamilyTreeProject.DomainServices

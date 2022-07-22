@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FamilyTreeProject.Common;
 using FamilyTreeProject.Common.Data;
-using FamilyTreeProject.Core;
-using FamilyTreeProject.Core.Common;
+using FamilyTreeProject.Common.Models;
 using Naif.Core.Collections;
 using Naif.Core.Contracts;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using FamilyTreeProject.Common.Data;
-using FamilyTreeProject.Core.Common;
+using FamilyTreeProject.Common.Models;
 using FamilyTreeProject.DomainServices.Common;
 using FamilyTreeProject.DomainServices.Tests.Common;
 using Moq;

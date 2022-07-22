@@ -1,4 +1,4 @@
-﻿using FamilyTreeProject.Core;
+﻿using FamilyTreeProject.Common.Models;
 using FamilyTreeProject.DomainServices.Common;
 
 namespace FamilyTreeProject.DomainServices

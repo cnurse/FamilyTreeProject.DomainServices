@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FamilyTreeProject.Core;
+using FamilyTreeProject.Common.Models;
 using FamilyTreeProject.DomainServices.Tests.Common;
 using NUnit.Framework;
 
