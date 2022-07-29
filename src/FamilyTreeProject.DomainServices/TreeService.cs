@@ -58,6 +58,16 @@ namespace FamilyTreeProject.DomainServices
         }
 
         /// <summary>
+        /// Gets a collection of trees based on a predicate
+        /// </summary>
+        /// <param name="predicate">The predicate to use</param>
+        /// <returns>List of trees</returns>
+        public IEnumerable<Tree> Find(Func<Tree, bool> predicate)
+        {
+            return _repository.Find(predicate);
+        }
+
+        /// <summary>
         /// Retrieves a single tree
         /// </summary>
         /// <param name = "id">The Id of the tree</param>

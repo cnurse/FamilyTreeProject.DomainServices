@@ -34,7 +34,6 @@ namespace FamilyTreeProject.DomainServices.Common
         protected IRepository<TEntity> Repository { get; private set; }
         protected IUnitOfWork UnitOfWork { get; private set; }
 
-
         /// <summary>
         ///   Adds an entity to the data store and sets the <see cref = "BaseEntity.Id" /> property
         ///   of the <paramref name = "entity" /> to the id of the new entity.
@@ -107,6 +106,16 @@ namespace FamilyTreeProject.DomainServices.Common
         }
 
         /// <summary>
+        /// Gets a collection of entities based on a predicate
+        /// </summary>
+        /// <param name="predicate">The predicate to use</param>
+        /// <returns>List of trees</returns>
+        public IEnumerable<TEntity> Find(Func<TEntity, bool> predicate)
+        {
+            return Repository.Find(predicate);
+        }
+        
+        /// <summary>
         /// Retrieves a single TEntity
         /// </summary>
         /// <param name = "id">The Id of the entity to retrieve</param>
@@ -138,7 +147,6 @@ namespace FamilyTreeProject.DomainServices.Common
         /// <param name="treeId">The Id of the tree</param>
         /// <param name="predicate">The predicate to use</param>
         /// <returns>List of entities</returns>
-
         public IEnumerable<TEntity> Get(string treeId, Func<TEntity, bool> predicate)
         {
             return Get(treeId).Where(predicate);

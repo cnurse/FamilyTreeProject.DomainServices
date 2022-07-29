@@ -24,6 +24,13 @@ namespace FamilyTreeProject.DomainServices.Common
         void Delete(TEntity entity);
 
         /// <summary>
+        /// Gets a collection of entities based on a predicate
+        /// </summary>
+        /// <param name="predicate">The predicate to use</param>
+        /// <returns>List of trees</returns>
+        IEnumerable<TEntity> Find(Func<TEntity, bool> predicate);
+        
+        /// <summary>
         /// Retrieves a single TEntity
         /// </summary>
         /// <param name = "id">The Id of the entity to retrieve</param>

@@ -24,6 +24,13 @@ namespace FamilyTreeProject.DomainServices
         void Delete(Tree tree);
 
         /// <summary>
+        /// Gets a collection of trees based on a predicate
+        /// </summary>
+        /// <param name="predicate">The predicate to use</param>
+        /// <returns>List of trees</returns>
+        IEnumerable<Tree> Find(Func<Tree, bool> predicate);
+
+        /// <summary>
         /// Retrieves a single tree
         /// </summary>
         /// <param name = "treeId">The Id of the tree</param>
